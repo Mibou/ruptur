@@ -1,0 +1,22 @@
+
+<div class="my-fluid-container">
+  <div id="filter">
+    <div *ngFor="let poi of poidata">
+      <a id="{{poi.id}}" class="link-magasin" title="{{poi.title}}">
+        <div class="poiListItem">
+          <div class="poiIconWrapper">
+            <div class="poiIcon"><i class="poiIcon fa fa-{{poi.type}}"></i></div>
+          </div>
+          <div class="poiContent">
+              <div class="poiContentTitle">{{poi.title}}</div>
+              <div class="poiContentSubtitle">{{poi.subtitle}}</div>
+              <div class="poiContentTags" [innerHTML]="poi|poiTags"></div>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+  <div id="carte">
+    <div id="map"></div>
+  </div>
+</div>
