@@ -69,8 +69,9 @@ export class AppComponent implements AfterViewInit {
 
     $(document).on('click', '.link-magasin', function() {
       let poi: Poi;
-      const index = pois.findIndex(poii => Number(poii.id) === Number(this.ATTRIBUTE_NODE['id']));
-      poi = pois[index];
+      const element: any = this;
+      const index = poidata.findIndex(poii => Number(poii.id) === Number(element.id));
+      poi = poidata[index];
       const Lat_Lng = new L.LatLng(poi['coordinates'][0], poi['coordinates'][1]);
       map.setView(Lat_Lng , 15, {pan: {animate: true, duration: 1}});
     });
