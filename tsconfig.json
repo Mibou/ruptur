@@ -5,7 +5,7 @@
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
-    "module": "es2015",
+    "module": "commonjs",
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
@@ -13,9 +13,14 @@
     "typeRoots": [
       "node_modules/@types"
     ],
+    "types": [
+      "jquery"
+    ],
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
   }
 }

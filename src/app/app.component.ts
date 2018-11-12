@@ -1,4 +1,5 @@
 import { Component, AfterViewInit } from '@angular/core';
+import * as poidata from './test.json';
 import * as $ from 'jquery';
 
 declare let L;
@@ -43,18 +44,9 @@ export class AppComponent implements AfterViewInit {
 
     function updatePois() {
       $.each(allMarkers, function(index, marker) { marker.remove(); });
-      pois = [
-        {id: 1, type:'user', title: 'Alain DURET', subtitle: 'Immobilier', tags: ['Recyclage déchets','Energies renouvelables'], coordinates: [46.8711, -1.0131]},
-        {id: 2, type:'user', title: 'Marie COUTANCEAU', subtitle: 'Immobilier', tags: ['Recyclage déchets','Energies renouvelables'], coordinates: [46.6705, -1.4264]},
-        {id: 3, type:'rocket', title: 'Agroécologie Urbaine', subtitle: 'Immobilier', tags: ['Recyclage déchets','Energies renouvelables'], coordinates: [46.6978, -1.9445]},
-        {id: 4, type:'lightbulb', title: 'Obsolescence programmée', subtitle: 'Immobilier', tags: ['Recyclage déchets','Energies renouvelables'], coordinates: [46.4930, -1.7955]},
-        {id: 5, type:'lightbulb', title: 'Recherche 300kg de carton', subtitle: 'Immobilier', tags: ['Recyclage déchets','Energies renouvelables'], coordinates: [47.2184, -1.5536]},
-        {id: 6, type:'user', title: 'Pascal METENIER', subtitle: 'Immobilier', tags: ['Recyclage déchets','Energies renouvelables'], coordinates: [46.4660, -0.8065]},
-        {id: 7, type:'user', title: 'Alain DURET', subtitle: 'Immobilier', tags: ['Recyclage déchets','Energies renouvelables'], coordinates: [46.9949, -1.7399]}
-      ]
 
       $('#filter').html('');
-      pois.forEach(function(poi) {
+      poidata.forEach(function(poi) {
         $('#filter').append(generateInfoDiv(poi));
         const currentMarker: Marker = L.marker(
           poi.coordinates, {
@@ -77,7 +69,7 @@ export class AppComponent implements AfterViewInit {
 
     $(document).on('click', '.link-magasin', function() {
       let poi: Poi;
-      const index = pois.findIndex(poi => Number(poi.id) === Number(this.activeElement.id));
+      const index = pois.findIndex(poii => Number(poii.id) === Number(this.ATTRIBUTE_NODE['id']));
       poi = pois[index];
       const Lat_Lng = new L.LatLng(poi['coordinates'][0], poi['coordinates'][1]);
       map.setView(Lat_Lng , 15, {pan: {animate: true, duration: 1}});

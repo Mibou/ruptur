@@ -25,7 +25,6 @@
     "@angular/platform-browser": "~7.0.0",
     "@angular/platform-browser-dynamic": "~7.0.0",
     "@angular/router": "~7.0.0",
-    "@types/jquery": "^3.3.22",
     "core-js": "^2.5.4",
     "express": "^4.16.4",
     "jquery": "^3.3.1",
@@ -37,6 +36,7 @@
   "devDependencies": {
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "~2.0.3",
+    "@types/jquery": "^3.3.22",
     "@types/node": "~8.9.4",
     "codelyzer": "~4.5.0",
     "jasmine-core": "~2.99.1",
