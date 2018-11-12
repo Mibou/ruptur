@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import {} from 'jasmine';
 import { PoisComponent } from './pois.component';
+import { PoiTagsPipe } from '../poi-tags.pipe';
 
 describe('PoisComponent', () => {
   let component: PoisComponent;
@@ -8,7 +9,7 @@ describe('PoisComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PoisComponent ]
+      declarations: [ PoisComponent, PoiTagsPipe ]
     })
     .compileComponents();
   }));

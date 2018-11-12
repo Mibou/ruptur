@@ -4,8 +4,7 @@ import { Marker } from '../marker';
 
 import * as POIDATA from '../test.json';
 import * as $ from 'jquery';
-
-declare let L;
+import * as L from 'leaflet';
 
 @Component({
   selector: 'app-pois',
@@ -36,24 +35,25 @@ export class PoisComponent implements OnInit {
     this.poidata.forEach(_ => this.appendPoi(_));
   }
 
-  setView() {
+  setView(e) {
     let poi: Poi;
-    const element: any = this;
-    const index = this.poidata.findIndex(poii => Number(poii.id) === Number(element.id));
-    poi = this.poidata[index];
-    const Lat_Lng = new L.LatLng(poi['coordinates'][0], poi['coordinates'][1]);
-    this._map.setView(Lat_Lng , 15, {pan: {animate: true, duration: 1}});
+    const element: any = e;
+    const index = this.poidata.findIndex(poii => Number(poii.id) === Number(element.currentTarget.id));
+    if (index >= 0) {
+      poi = this.poidata[index];
+      const Lat_Lng = new L.LatLng(poi['coordinates'][0], poi['coordinates'][1]);
+      this._map.setView(Lat_Lng , 15, {pan: {animate: true, duration: 1}});
+    }
   }
 
   prepareMap() {
-    this._map = L.map('map').setView([46.871170, -1.013180], 9);
+    this._map = new L.Map('map').setView([46.871170, -1.013180], 9);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: 'Tiles Courtesy of <a href="https://www.openstreetmap.org/" target="_blank">Open street map</a>' +
         '— Map data © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       maxZoom: 18,
       minZoom: 2,
-      reuseTiles: true,
       subdomains: 'abc',
     }).addTo(this._map);
     this._map.removeControl(this._map.zoomControl);
@@ -63,7 +63,7 @@ export class PoisComponent implements OnInit {
 
   ngOnInit() {
     this.prepareMap();
-    $(document).on('click', '.link-magasin', this.setView);
+    $(document).on('click', 'a.link-magasin', (e) => this.setView(e));
     this.updatePois();
   }
 
