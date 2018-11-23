@@ -11,7 +11,7 @@ gunicorn==19.9.0
 django-heroku==0.3.1
 
 # Elasticsearch
-elasticsearch=5.5.1
+elasticsearch==5.5.1
 
 # Django geonames API
 django-geonames-api==0.8
