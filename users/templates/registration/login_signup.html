@@ -1,0 +1,12 @@
+{% extends '__base.html' %}
+
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <a href="{% url 'login' %}"><button type="button" class="btn btn-primary">Se connecter</button></a>
+            <div class="p-10">
+            </div>
+            <a href="{% url 'signup' %}" class="ml-5"><button type="subuttonbmit" class="btn btn-primary">S'inscrire</button></a>
+        </div>
+    </div>
+{% endblock %}

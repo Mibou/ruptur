@@ -1,0 +1,9 @@
+main div.container div.contribute-title {
+    text-transform: uppercase;
+    font-size: 18pt;
+    text-align: center;
+}
+
+main div.container a.nav-link {
+    font-size: 18pt;
+}

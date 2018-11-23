@@ -1,11 +1,8 @@
-from contributors import Contributor
-from projects import Project, Nature
+from .projects import Project, Nature, Tag, Invitation
 
 __all__ = [
     'Nature',
     'Project',
     'Tag',
-    'Invitation',
-    'Contributor',
-    'Skill'
+    'Invitation'
 ]

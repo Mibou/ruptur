@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
     <head>
@@ -16,8 +17,8 @@
    integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
    crossorigin=""/>
 
-        <!-- Map -->
-        <link rel="stylesheet" type="text/css" href="map.css">
+        {% block style %}
+        {% endblock %}
 
         <title>Ruptur</title>
 
@@ -26,14 +27,20 @@
         <header role="banner">
             <nav class="navbar navbar-expand-lg navbar-light">
                 <div class="container">
-                    <a href="/" class="navbar-brand"><img src="logo_ruptur.svg" label="Ruptur" title="Logo ruptur"></a>
+                    <a href="/" class="navbar-brand"><img src="{% static 'projects/logo_ruptur.svg' %}" label="Ruptur" title="Logo ruptur"></a>
                     <div class="d-flex ml-auto">
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#globalNavbar" aria-controls="globalNavbar" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                     </div>
                     <div class="collapse navbar-collapse" id="globalNavbar">
                         <form class="form-inline form-navbar my-2 my-lg-0 order-2" action="/find/">
                             <input class="form-control" name="s" type="text" placeholder="Trouvez un projet, une personne...">
-                            <button type="button" class="ml-2 form-control btn btn-primary btn-md">Je veux contribuer</button>
+                            <a class="nav-link" href="{% if user.is_authenticated %}/contribute{% else %}/accounts/login-signup{% endif %}"><button type="button" class="ml-2 form-control btn btn-primary btn-md">Je veux contribuer</button></a>
+                            <div>
+                                <i class="fa fa-user"></i>
+                            </div>
+                            <div>
+                                {% if user.is_authenticated %}<a class="nav-link" href="/accounts/logout"><i class="fa fa-door-open"></i></a>{% endif %}
+                            </div>
                         </form>
 
                         <ul class="navbar-nav mr-auto order-1">
@@ -45,14 +52,8 @@
             </nav>
         </header>
         <main>
-            <div class="my-fluid-container">
-                <div id="filter"></div>
-                <div id="carte">
-                    <div id="map">
-                    </div>
-                </div>
-            </div>
-            <div class="container mt-3"><button class="btn btn-primary btn-lg btn-block">Je veux contribuer</button></div>
+            {% block content %}
+            {% endblock %}
         </main>
 
         <!-- JQuery -->
@@ -67,6 +68,7 @@
    integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
    crossorigin=""></script>
 
-        <script src="map.js"></script>
+        {% block script %}
+        {% endblock %}
     </body>
 </html>

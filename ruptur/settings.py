@@ -14,6 +14,18 @@ import os
 import django_heroku
 import dj_database_url
 
+# Make GDAL work for GeoDjango
+GEOS_LIBRARY_PATH = os.environ.get('GEOS_LIBRARY_PATH')
+GDAL_LIBRARY_PATH = os.environ.get('GDAL_LIBRARY_PATH')
+
+# Haystack connexion needed for geography
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack_elasticsearch5.Elasticsearch5SearchEngine',
+        'URL': 'http://127.0.0.1:9200/',
+        'INDEX_NAME': 'haystack',
+    }
+}
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -26,14 +38,23 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'geography',
+    'projects.apps.ProjectsConfig',
+    'users.apps.UsersConfig',
+    'dal',
+    'dal_select2',
+    'elasticsearch',
+    'haystack',
+    'crispy_forms',
+    'six',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,6 +62,17 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+
+# Crispy forms config
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+
+# Login redirections
+
+LOGIN_REDIRECT_URL = 'projects-contribute'
+LOGOUT_REDIRECT_URL = 'projects-map'
+
 
 MIDDLEWARE = [
     # Simplified static file serving.
@@ -58,10 +90,12 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'ruptur.urls'
 
+AUTH_USER_MODEL = 'users.User'
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [(os.path.join(BASE_DIR, 'templates'))],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

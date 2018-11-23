@@ -1,0 +1,64 @@
+#map {
+    position: static;
+    top: 0;
+    left: 500px;
+    height: 600px;
+}
+
+#filter {
+    float: left;
+    left: 0px;
+    margin-top: 0px;
+    width: 500px;
+    height: 600px;
+    max-height: 600px;
+    padding-left: 0px;
+    background-color: #ddd;
+    background-repeat: no-repeat;
+    position: absolute;
+    z-index: 9998;
+    overflow: auto;
+}
+
+
+.poiListItem {
+    height: 100px;
+    width: 480px;
+    padding: 20px 0px 20px 0px;
+    border: 1px solid #ccc;
+}
+
+#filter a:nth-child(odd) .poiListItem {
+    background-color: #ccd;
+}
+
+.poiIconWrapper {
+    float: left;
+}
+
+.poiIcon i {
+    margin: 0px 0px 0px 5px;
+    width: 60px;
+    text-align: center;
+    font-size: 60px;
+}
+
+.poiContent {
+    margin-left: 75px;
+}
+
+.poiContentTitle {
+    font-size: 18px;
+}
+
+.poiContentSubtitle {
+    font-size: 14px;
+}
+
+.poiContentTags {
+    font-size: 12px;
+}
+.poiContentTag {
+    float: left;
+    margin-right: 20px;
+}

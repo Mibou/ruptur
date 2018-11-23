@@ -1,0 +1,23 @@
+{% extends '__base.html' %}
+{% load static %}
+
+{% block style %}
+    <!-- Map -->
+    <link rel="stylesheet" type="text/css" href="{% static 'projects/map.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="my-fluid-container">
+        <div id="filter"></div>
+        <div id="carte">
+            <div id="map">
+            </div>
+        </div>
+    </div>
+    <div class="container mt-3"><a class="nav-link" href="{% if user.is_authenticated %}/contribute{% else %}/accounts/login-signup{% endif %}"><button type="button" class="btn btn-primary btn-lg btn-block">Je veux contribuer</button></a></div>
+{% endblock %}
+
+{% block script %}
+    <!-- Map -->
+    <script src="{% static 'projects/map.js' %}"></script>
+{% endblock %}
