@@ -1,4 +1,9 @@
-from .projects import Project, Nature, Tag, Invitation
+from .projects import (
+    Project,
+    Nature,
+    Tag,
+    Invitation,
+)
 
 __all__ = [
     'Nature',

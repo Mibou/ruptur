@@ -22,6 +22,7 @@ class Contributor(VirtualDelete, Datation):
         'users.Sector',
         on_delete=models.PROTECT
     )
+    phonenumber = models.CharField(max_length=10, blank=True, null=True)
     company = models.CharField(max_length=120)
     position = models.ForeignKey(
         'users.Position',

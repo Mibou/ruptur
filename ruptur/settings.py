@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'geography',
     'projects.apps.ProjectsConfig',
     'users.apps.UsersConfig',
+    'ideas.apps.IdeasConfig',
     'dal',
     'dal_select2',
     'elasticsearch',
