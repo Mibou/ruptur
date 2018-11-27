@@ -24,4 +24,5 @@ urlpatterns = [
     path('accounts/', include('users.urls')),
     path('', include('geography.urls')),
     path('', include('projects.urls')),
+    path('', include('ideas.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_URL)

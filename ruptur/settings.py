@@ -75,6 +75,9 @@ LOGIN_REDIRECT_URL = 'projects-contribute'
 LOGOUT_REDIRECT_URL = 'projects-map'
 
 
+AUTH_PASSWORD_VALIDATORS = []
+
+
 MIDDLEWARE = [
     # Simplified static file serving.
     # https://warehouse.python.org/project/whitenoise/

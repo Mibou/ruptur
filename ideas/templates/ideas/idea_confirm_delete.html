@@ -1,0 +1,22 @@
+{% extends '__base.html' %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <form method="post" class="col-lg-6 col-lg-offset-3">
+                {% csrf_token %}
+                Êtes-vous sûr de vouloir supprimer votre idée "{{object}}" ?
+                <button type="submit" class="btn btn-primary">Confirmer</button>
+                <a href="{% url 'projects-contribute' %}">
+                    <button type="button" class="btn btn-primary">Retour</button>
+                </a>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+    {{ form.media }}
+{% endblock %}

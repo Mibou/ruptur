@@ -20,5 +20,3 @@ def contribute(request):
 class ProjectDetails(generic.CreateView):
     form_class = ProjectForm
     queryset = Project.objects
-    success_url = reverse_lazy('contributor-details')
-    template_name = 'contributors/details.html'
