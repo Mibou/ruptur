@@ -5,7 +5,6 @@ from .models import (
     Contributor,
     User
 )
-from django import forms
 from dal import autocomplete
 
 
@@ -26,7 +25,7 @@ class CustomUserChangeForm(UserChangeForm):
 class ContributorForm(ModelForm):
     class Meta:
         model = Contributor
-        fields = ('city', 'sector', 'position', 'skill')
+        exclude = []
 
         widgets = {
             'city': autocomplete.ModelSelect2(

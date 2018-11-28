@@ -9,10 +9,6 @@ __all__ = [
 ]
 
 
-def map(request):
-    return render(request, 'projects/map.html')
-
-
 def contribute(request):
     return render(request, 'projects/contribute.html')
 

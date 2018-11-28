@@ -1,7 +1,7 @@
 from .signup import SignUp
-from .details import ContributorDetails
+from .details import UserDetailView
 
 __all__ = [
     'SignUp',
-    'ContributorDetails'
+    'UserDetailView'
 ]

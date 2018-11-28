@@ -32,7 +32,7 @@ class Contributor(VirtualDelete, Datation):
         'users.Skill',
         on_delete=models.PROTECT
     )
-    professional_profil = models.CharField(
+    professional_profile = models.CharField(
         max_length=120,
         help_text='Copie/colle ici l\'URL de ton profil LinkedIn, Viadéo, ...'
     )

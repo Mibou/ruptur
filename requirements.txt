@@ -14,7 +14,7 @@ django-heroku==0.3.1
 elasticsearch==5.5.1
 
 # Django geonames API
-django-geonames-api==0.8
+django-geonames-api==0.8.1
 
 # Fancy forms
 django-crispy-forms==1.7.2

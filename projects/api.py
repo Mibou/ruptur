@@ -1,10 +1,11 @@
 from tastypie.resources import ModelResource
 from .models import Project, Tag
-from users.api import SkillResource
+from users.api import ContributorResource, SkillResource
 from tastypie import fields
 
 
 class TagResource(ModelResource):
+
     class Meta:
         queryset = Tag.objects.all()
         resource_name = 'tags'
@@ -13,6 +14,7 @@ class TagResource(ModelResource):
 
 
 class ProjectResource(ModelResource):
+
     tags = fields.ToManyField(
         TagResource,
         'tags',
@@ -25,9 +27,14 @@ class ProjectResource(ModelResource):
         related_name='project',
         full=True
     )
+    creator = fields.ToOneField(ContributorResource, 'creator', full=True)
 
     class Meta:
         queryset = Project.objects.all()
         resource_name = 'projects'
         excludes = []
         allowed_methods = ['get']
+
+    def dehydrate(self, bundle):
+        bundle.data['type'] = 'rocket'
+        return bundle

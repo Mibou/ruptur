@@ -47,6 +47,7 @@ ALLOWED_HOSTS = ['localhost']
 
 INSTALLED_APPS = [
     'geography',
+    'map.apps.MapConfig',
     'projects.apps.ProjectsConfig',
     'users.apps.UsersConfig',
     'ideas.apps.IdeasConfig',
@@ -171,6 +172,9 @@ STATIC_URL = '/static/'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
