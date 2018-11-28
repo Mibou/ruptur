@@ -33,7 +33,7 @@ function updatePois() {
   tr_lon= top_right.lng;
 
   $.ajax({
-    url: '/api/v1/projects/?format=json',
+    url: '/api/v1/poi/?format=json',
     contentType: 'application/json',
     type: 'GET',
     async: false,
@@ -49,7 +49,7 @@ function updatePois() {
       pois.forEach(function(poi) {
         $('#filter').append(generateInfoDiv(poi))
         currentMarker = L.marker(
-          [poi.creator.city.latitude, poi.creator.city.longitude], {
+          [poi.latitude, poi.longitude], {
           clickable: true
         })
         currentMarker.addTo(map);
@@ -61,14 +61,14 @@ function updatePois() {
 
 function generateInfoDiv(poi) {
   poiTags = '';
-  poi.tags.forEach(function(poiTag) { poiTags = poiTags + '<div class="poiContentTag">#{0}</div>'.format(poiTag.name); });
-  return '<a id="{0}" class="link-magasin" title="{2}"><div class="poiListItem"><div class="poiIconWrapper"><div class="poiIcon"><i class="poiIcon fa fa-{1}"></i></div></div><div class="poiContent"><div class="poiContentTitle">{2}</div><div class="poiContentSubtitle">{3}</div><div class="poiContentTags">{4}</div></div></div></a>'.format(poi.id, poi.type, poi.title, poi.description, poiTags);
+  poi.tags.forEach(function(poiTag) { poiTags = poiTags + '<div class="poiContentTag">#{0}</div>'.format(poiTag); });
+  return '<a id="{0}" class="link-magasin" title="{2}"><div class="poiListItem"><div class="poiIconWrapper"><div class="poiIcon"><i class="poiIcon fa fa-{1}"></i></div></div><div class="poiContent"><div class="poiContentTitle">{2}</div><div class="poiContentSubtitle">{3}</div><div class="poiContentTags">{4}</div></div></div></a>'.format(poi.id, poi.icon, poi.title, poi.subtitle, poiTags);
 }
 
 $(document).on("click", ".link-magasin", function(){
   index = pois.findIndex(poi => poi.id == this.id);
   poi = pois[index];
-  Lat_Lng = new L.LatLng(poi.creator.city.latitude, poi.creator.city.longitude);
+  Lat_Lng = new L.LatLng(poi.latitude, poi.longitude);
   map.setView(Lat_Lng , 15, {pan: {animate:true, duration: 1}});
 });
 

@@ -10,6 +10,6 @@ v1_api.register(ProjectResource())
 
 urlpatterns = [
     url('api/', include(v1_api.urls)),
-    path('contribute', contribute, name='projects-contribute'),
-    path('details', ProjectDetails.as_view(), name='projects-details'),
+    path('contribute', contribute, name='contribute'),
+    path('details', ProjectDetails.as_view(), name='project-form'),
 ]

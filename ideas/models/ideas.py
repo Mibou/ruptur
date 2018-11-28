@@ -2,6 +2,9 @@ from django.db import models
 from django.urls import reverse
 from ruptur.libs.virtual_delete import VirtualDelete
 from ruptur.libs.datation import Datation
+from django.contrib.gis.geos import Point
+from typing import Optional
+
 
 __all__ = [
     'Idea',
@@ -16,6 +19,10 @@ class Idea(VirtualDelete, Datation):
 
     def get_absolute_url(self):
         return reverse('idea-detail', kwargs={'pk': self.pk})
+
+    def get_location(self) -> Optional[Point]:
+        if self.latitude and self.longitude:
+            return Point(self.longitude, self.latitude)
 
 
 class Vote(models.Model):

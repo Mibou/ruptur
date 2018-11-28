@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import SignUp, UserDetailView
+from .views import SignUp, UserDetailView, ContributorUpdate
 from django.views.generic import TemplateView
 
 
@@ -14,5 +14,10 @@ urlpatterns = [
         'contributor/details/<int:pk>',
         UserDetailView.as_view(),
         name='contributor-details'
+    ),
+    path(
+        'contributor/update',
+        ContributorUpdate.as_view(),
+        name='contributor-form'
     ),
 ]

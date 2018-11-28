@@ -72,8 +72,8 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # Login redirections
 
-LOGIN_REDIRECT_URL = 'projects-contribute'
-LOGOUT_REDIRECT_URL = 'projects-map'
+LOGIN_REDIRECT_URL = 'contribute'
+LOGOUT_REDIRECT_URL = 'map'
 
 
 AUTH_PASSWORD_VALIDATORS = []

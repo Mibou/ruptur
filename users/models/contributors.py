@@ -1,6 +1,9 @@
 from django.db import models
 from ruptur.libs.virtual_delete import VirtualDelete
 from ruptur.libs.datation import Datation
+from ruptur.libs.poi import POI
+from django.contrib.gis.geos import Point
+from typing import Optional
 from .users import User
 
 __all__ = [
@@ -12,6 +15,7 @@ __all__ = [
 
 
 class Contributor(VirtualDelete, Datation):
+    CLASS_ICON = 'user'
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     city = models.ForeignKey(
@@ -46,6 +50,34 @@ class Contributor(VirtualDelete, Datation):
             self.user.last_name,
             self.city
         )
+
+    def get_tags(self):
+        return [str(self.skill)]
+
+    def get_title(self):
+        return " ".join([self.user.first_name, self.user.last_name])
+
+    def get_subtitle(self):
+        return str(self.sector)
+
+    def get_latitude(self):
+        return self.city.latitude
+
+    def get_longitude(self):
+        return self.city.longitude
+
+    def get_icon(self):
+        return self.CLASS_ICON
+
+    def get_url(self):
+        return ''
+
+    def get_location(self) -> Optional[Point]:
+        if self.latitude and self.longitude:
+            return Point(self.longitude, self.latitude)
+
+
+POI.register(Contributor)
 
 
 class Sector(models.Model):
