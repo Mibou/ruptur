@@ -14,7 +14,8 @@ v1_api.register(IdeaResource())
 urlpatterns = [
     url('api/', include(v1_api.urls)),
     path('idea/add/', IdeaCreate.as_view(), name='idea-add'),
-    path('idea/edit/<int:pk>/', IdeaUpdate.as_view(), name='idea-detail'),
+    path('idea/new', IdeaUpdate.as_view(), name='idea-form'),
+    path('idea/<int:pk>/edit', IdeaUpdate.as_view(), name='idea-form'),
     path('idea/<int:pk>/', IdeaDetailView.as_view(), name='idea-detail'),
     path('idea/<int:pk>/delete/', IdeaDelete.as_view(), name='idea-delete')
 ]

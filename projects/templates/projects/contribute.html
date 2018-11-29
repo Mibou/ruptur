@@ -17,7 +17,7 @@
         <a class="nav-link" href="{% url 'project-form' %}"><i class="fa fa-rocket"></i> Créant un projet bleu</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link disabled" href="#"><i class="fa fa-lightbulb"></i> Publiant une idée / demande</a>
+        <a class="nav-link" href="{% url 'idea-form' %}"><i class="fa fa-lightbulb"></i> Publiant une idée / demande</a>
     </li>
     </ul>
     {% if request.user.contributor %}
@@ -30,7 +30,7 @@
                 </div>
 
                 <div class="col">
-                <i class="fa fa-pen pl-4"></i><i class="fa fa-times pr-2 pl-2"></i>
+                <a href="{% url 'idea-form' idea.id %}"><i class="fa fa-pen pl-4"></i></a><i class="fa fa-times pr-2 pl-2"></i>
                 </div>
             </div>
             {% endfor %}
@@ -39,6 +39,7 @@
                 <div class="col-2">
                 <i class="fa fa-{{ project.get_icon }} pr-2 pl-2"></i><a href="{{ project.get_absolute_url }}">{{ project.title }}</a>
                 </div>
+
                 <div class="col">
                 <a href="{% url 'project-form' project.id %}"><i class="fa fa-pen pl-4"></i></a><i class="fa fa-times pr-2 pl-2"></i>
                 </div>

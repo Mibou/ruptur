@@ -2,10 +2,10 @@ from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.views.generic import UpdateView
 from .forms import ProjectForm
-from users.forms import ContributorForm
-from users.views import ContributorUpdate
 from .models import Project
 from users.models import User
+from users.forms import ContributorForm
+from users.views import ContributorUpdate
 from django.http import HttpResponseRedirect
 from django.views.generic import DetailView
 
