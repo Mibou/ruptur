@@ -5,6 +5,7 @@ from ruptur.libs.datation import Datation
 from ruptur.libs.poi import POI
 from django.contrib.gis.geos import Point
 from typing import Optional
+from tagging.fields import TagField
 
 
 __all__ = [
@@ -44,14 +45,23 @@ class Tag(models.Model):
 class Project(VirtualDelete, Datation):
     CLASS_ICON = 'rocket'
 
-    title = models.CharField(max_length=250)
-    description = models.TextField()
+    title = models.CharField(
+        max_length=250,
+        verbose_name='Titre du projet'
+    )
+    description = models.TextField(
+        verbose_name='Description du projet'
+    )
     nature = models.ForeignKey(
         'projects.Nature',
-        on_delete=models.PROTECT
+        on_delete=models.PROTECT,
+        verbose_name='Nature du chantier'
     )
-    tags = models.ManyToManyField('projects.Tag')
-    skills = models.ManyToManyField('users.Skill')
+    tags = TagField()
+    skills = models.ManyToManyField(
+        'users.Skill',
+        verbose_name='Compétences recherchées'
+    )
     creator = models.ForeignKey(
         'users.Contributor',
         on_delete=models.CASCADE,
@@ -70,7 +80,7 @@ class Project(VirtualDelete, Datation):
         return self.title
 
     def get_tags(self):
-        return [str(tag) for tag in self.tags.all()]
+        return [str(tag) for tag in self.tags.split(',')]
 
     def get_title(self):
         return self.title

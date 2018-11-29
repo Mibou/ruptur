@@ -2,6 +2,7 @@ from django.forms import ModelForm
 from .models import (
     Project
 )
+from dal import autocomplete
 
 
 class ProjectForm(ModelForm):
@@ -16,3 +17,9 @@ class ProjectForm(ModelForm):
             'creator',
             'contributors'
         ]
+
+        widgets = {
+            'tags': autocomplete.TaggingSelect2(
+                'tag-autocomplete'
+            )
+        }

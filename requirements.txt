@@ -18,3 +18,6 @@ django-geonames-api==0.8.3
 
 # Fancy forms
 django-crispy-forms==1.7.2
+
+# Tagging
+django-tagging==0.4.6

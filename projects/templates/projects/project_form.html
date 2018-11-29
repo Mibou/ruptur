@@ -27,24 +27,17 @@
                         <label for="last_name">Nom</label><input type="text" id="last_name" name="last_name" class="form-control" autocomplete="last_name" value="{{ request.user.last_name }}" />
                         </div>
                     </div>
-                    {{ form.city|as_crispy_field }}
-                    {{ form.phonenumber|as_crispy_field }}
+
+                    {{ contribform.city|as_crispy_field }}
 
                     <div class="h3">Ta contribution</div>
-                    {{ form.professional_profile|as_crispy_field }}
-                    {{ form.position|as_crispy_field }}
-                    <div class="pt-4">
-                        <span class="font-weight-bold">Décris en une phrase ton apport à la communauté</span>
-                        {{ form.description|as_crispy_field }}
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            {{ form.sector|as_crispy_field }}
-                        </div>
-                        <div class="form-group col-md-6">
-                            {{ form.skill|as_crispy_field }}
-                        </div>
-                    </div>
+
+                    {{ form.title|as_crispy_field }}
+                    {{ form.description|as_crispy_field }}
+                    {{ form.nature|as_crispy_field }}
+
+                    <div class="h4">Mots-clefs pour identifier facilement le projet</div>
+                    {{ form.tags|as_crispy_field }}
                 </div>
 
                 {% if request.user.id %}
@@ -60,7 +53,7 @@
     </div>
 {% endblock %}
 {% block script %}
-    {{ form.media }}
+    {{ contribform.media }}
     <script>
         function check_email(t) {
             $.ajax({

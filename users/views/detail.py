@@ -7,7 +7,6 @@ from ..models import Contributor, User
 
 import base64
 import hashlib
-import os
 
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect
@@ -30,7 +29,8 @@ class ContributorUpdate(UpdateView):
         else:
             return None
 
-    def _email_to_username(self, email):
+    @staticmethod
+    def _email_to_username(email):
         # Emails should be case-insensitive unique
         email = email.lower()
         # Deal with internationalized email addresses
@@ -39,28 +39,54 @@ class ContributorUpdate(UpdateView):
             hashlib.sha256(converted).digest()
         )[:30]
 
-    def update_contributor(self, request):
+    @staticmethod
+    def update_contributor(request):
         contributor = request.user.contributor
-        contributor.city_id = request.POST.get('city')
-        contributor.phonenumber = request.POST.get('phonenumber')
-        contributor.professional_profile = request.POST.get(
-            'professional_profile'
-        )
-        contributor.position_id = request.POST.get('position')
-        contributor.description = request.POST.get('description')
-        contributor.sector_id = request.POST.get('sector')
-        contributor.skill_id = request.POST.get('skill')
 
-    def login(self, request):
+        for fkattr in [
+            'city',
+            'position',
+            'sector',
+            'skill'
+        ]:
+            if request.POST.get(fkattr):
+                setattr(contributor, fkattr + '_id', request.POST.get(fkattr))
+
+        for attr in [
+            'phonenumber',
+            'description',
+            'professional_profile'
+        ]:
+            if request.POST.get(attr):
+                setattr(contributor, attr, request.POST.get(attr))
+
+        contributor.save()
+
+    @staticmethod
+    def update_user(request):
+        user = request.user
+
+        for attr in [
+            'first_name',
+            'last_name'
+        ]:
+            if request.POST.get(attr):
+                setattr(user, attr, request.POST.get(attr))
+
+        user.save()
+
+    @staticmethod
+    def login(request):
         username = User.objects.get(email=request.POST['email']).username
         password = request.POST['password']
         user = authenticate(username=username, password=password)
         if user:
             login(request, user)
 
-    def create_user_contributor(self, request):
+    @classmethod
+    def create_user_contributor(cls, request):
         user = User.objects.create_user(
-            self._email_to_username(request.POST.get('email')),
+            cls._email_to_username(request.POST.get('email')),
             request.POST.get('email'),
             request.POST.get('password'),
             first_name=request.POST.get('first_name'),
@@ -82,6 +108,7 @@ class ContributorUpdate(UpdateView):
         if request.user.id:
             if hasattr(request.user, 'contributor'):
                 self.update_contributor(request)
+                self.update_user(request)
         else:
             try:
                 self.login(request)

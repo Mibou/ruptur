@@ -31,36 +31,48 @@ class Contributor(VirtualDelete, Datation):
     sector = models.ForeignKey(
         'users.Sector',
         on_delete=models.PROTECT,
-        verbose_name='Secteur'
+        verbose_name='Secteur',
+        blank=True,
+        null=True
     )
     phonenumber = models.CharField(
         max_length=10,
         blank=True,
         null=True,
-        verbose_name='Téléphone'
+        verbose_name='Téléphone',
     )
     company = models.CharField(
         max_length=120,
-        verbose_name='Entreprise'
+        verbose_name='Entreprise',
+        blank=True,
+        null=True
     )
     position = models.ForeignKey(
         'users.Position',
         on_delete=models.PROTECT,
-        verbose_name='Fonction'
+        verbose_name='Fonction',
+        blank=True,
+        null=True
     )
     skill = models.ForeignKey(
         'users.Skill',
         on_delete=models.PROTECT,
-        verbose_name='Une qualité'
+        verbose_name='Une qualité',
+        blank=True,
+        null=True
     )
     professional_profile = models.CharField(
         max_length=120,
         help_text='Copie/colle ici l\'URL de ton profil LinkedIn, Viadéo, ...',
-        verbose_name='Lien professionel'
+        verbose_name='Lien professionel',
+        blank=True,
+        null=True
     )
     description = models.TextField(
         help_text='Ce que verront les autres membres en 1er sur ton profil',
-        verbose_name=''
+        verbose_name='',
+        blank=True,
+        null=True
     )
 
     def get_absolute_url(self):

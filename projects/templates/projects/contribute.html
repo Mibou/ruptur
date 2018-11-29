@@ -20,5 +20,31 @@
         <a class="nav-link disabled" href="#"><i class="fa fa-lightbulb"></i> Publiant une idée / demande</a>
     </li>
     </ul>
+    {% if request.user.contributor %}
+        {% if request.user.contributor.ideas.all or request.user.contributor.projects.all %}
+            <div class="h4 row font-weight-bold pt-5 pb-2">Contributions :</div>
+            {% for idea in request.user.contributor.ideas.all %}
+            <div class="row">
+                <div class="col-2">
+                <i class="fa fa-{{ idea.get_icon }} pr-2 pl-2"></i><a href="{{ idea.get_absolute_url }}">{{ idea.title }}</a>
+                </div>
+
+                <div class="col">
+                <i class="fa fa-pen pl-4"></i><i class="fa fa-times pr-2 pl-2"></i>
+                </div>
+            </div>
+            {% endfor %}
+            {% for project in request.user.contributor.projects.all %}
+            <div class="row">
+                <div class="col-2">
+                <i class="fa fa-{{ project.get_icon }} pr-2 pl-2"></i><a href="{{ project.get_absolute_url }}">{{ project.title }}</a>
+                </div>
+                <div class="col">
+                <a href="{% url 'project-form' project.id %}"><i class="fa fa-pen pl-4"></i></a><i class="fa fa-times pr-2 pl-2"></i>
+                </div>
+            </div>
+            {% endfor %}
+        {% endif %}
+    {% endif %}
 </div>
 {% endblock %}
