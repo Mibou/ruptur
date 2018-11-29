@@ -23,11 +23,7 @@ HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'haystack_elasticsearch5.Elasticsearch5SearchEngine',
         'URL': 'https://i1zxwswlso:agm4j6cctw@banyan-634032811.eu-west-1.bonsaisearch.net/',
-        'INDEX_NAME': 'haystack',
-        'KWARGS': {
-            'use_ssl': True,
-            'verify_certs': False,
-        }
+        'INDEX_NAME': 'haystack'
     }
 }
 
