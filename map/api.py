@@ -1,7 +1,6 @@
 from django.conf.urls import url
 from django.http import Http404
 from django.core.paginator import Paginator, InvalidPage
-from django.db.models import Q
 
 from tastypie.resources import Resource
 from tastypie.utils import trailing_slash
@@ -12,7 +11,6 @@ from haystack.utils.geo import Point
 from users.models import Contributor
 from projects.models import Project
 from ideas.models import Idea
-from itertools import chain
 
 
 class POIResource(Resource):
@@ -118,5 +116,5 @@ class POIResource(Resource):
         bundle.data['latitude'] = bundle.obj.get_latitude()
         bundle.data['longitude'] = bundle.obj.get_longitude()
         bundle.data['icon'] = bundle.obj.get_icon()
-        bundle.data['url'] = bundle.obj.get_url()
+        bundle.data['url'] = bundle.obj.get_absolute_url()
         return bundle

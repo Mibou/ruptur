@@ -10,7 +10,7 @@
                 {% csrf_token %}
                 Êtes-vous sûr de vouloir supprimer votre idée "{{object}}" ?
                 <button type="submit" class="btn btn-primary">Confirmer</button>
-                <a href="{% url 'projects-contribute' %}">
+                <a href="{% url 'contribute' %}">
                     <button type="button" class="btn btn-primary">Retour</button>
                 </a>
             </form>

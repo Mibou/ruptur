@@ -3,7 +3,8 @@ from .models import (
     Nature,
     Project,
     Tag,
-    Invitation
+    Invitation,
+    ProjectContributor
 )
 
 
@@ -13,10 +14,15 @@ class NatureAdmin(admin.ModelAdmin):
     search_fields = ['name']
 
 
+class ProjectContributorInline(admin.TabularInline):
+    model = ProjectContributor
+    extra = 2
+
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
     list_display = ('title', 'creator')
     search_fields = ['title', 'creator']
+    inlines = (ProjectContributorInline,)
 
 
 @admin.register(Tag)

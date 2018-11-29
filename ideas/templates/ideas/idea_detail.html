@@ -1,0 +1,99 @@
+{% extends '__base.html' %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="container">
+        <div class="row mb-3">
+            <span class="font-weight-bold">Idée / demande de <a href="{% url 'contributor-details' object.creator.id %}">{{ object.creator.user.get_full_name }}</a></span>
+        </div>
+
+        <div class="card mb-1 pt-3">
+            <div class="row justify-content-md-center">
+                <h2>{{ object.title }} </h2>
+            </div>
+            <div class="text-center">
+                <p>
+                    {{ object.description }}
+                </p>
+            </div>
+        </div>
+        <div class="mb-3 text-right">
+            <span class="mr-2"># Contributions : {{ object.contributions.count }}</span>
+            <span class="mr-2 thumbitup"><i class="fa fa-thumbs-up"></i> {{ object.get_votes_up.count }}</span>
+            <span class="thumbitdown"><i class="fa fa-thumbs-down"></i> {{ object.get_votes_down.count }}</span>
+        </div>
+        {% if request.user.id %}
+        <div class="text-center alert alert-info col-lg-10 offset-lg-1">
+            <div class="text-uppercase">Apportez votre contribution ici</div>
+            <i class="fa fa-info-circle"></i> Consultez les contributions des uns et des autres et complétez si nécessaire
+        </div>
+        {% else %}
+        <div class="text-center alert alert-info col-lg-10 offset-lg-1">
+            <div class="text-uppercase">Inscrivez-vous</div>
+            <i class="fa fa-info-circle"></i> <a href="{% url 'contribute' %}">Devenez contributeur</a> pour participer
+        </div>
+        {% endif %}
+        {% for contribution in object.contributions.all %}
+        <div class="card pt-2 pb-2 mb-3 col-lg-10 offset-lg-1">
+            <span class="font-weight-bold">{{ contribution.user.get_full_name }}</span>
+            {{ contribution.text }}
+        </div>
+        {% endfor %}
+        {% if request.user.id %}
+        <div class="card pt-2 pb-2 col-lg-10 offset-lg-1">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="new_contribution">Contribution :</label>
+                    <input type="text" class="form-control" value="" name="new_contribution" id="new_contribution" />
+                </div>
+                <button type="submit" class="btn btn-primary">Valider</button>
+            </form>
+        </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block script %}
+    {{ form.media }}
+
+    <!-- Gravatar -->
+    <script src="{% static 'users/gravatar.js' %}"></script>
+
+    <script>
+        gravatar_image_url = get_gravatar_image_url('{{ object.email }}', 200);
+        if(gravatar_image_url != '') {
+            $('.gravatar').attr('src', gravatar_image_url);
+        }
+
+        function thumbit(id, up) {
+            $.ajax({
+                url: '{% url "api_dispatch_list" resource_name="vote" api_name="v1" %}?format=json',
+                contentType: 'application/json',
+                type: 'POST',
+                async: false,
+                dataType: 'json',
+                data: JSON.stringify({
+                    'idea': '{% url "api_dispatch_detail" resource_name="idea" api_name="v1" pk=object.pk %}',
+                    'up': up
+                }),
+                beforeSend: function(jqXHR, settings) {
+                    // Pull the token out of the DOM.
+                    jqXHR.setRequestHeader('X-CSRFToken', $('input[name=csrfmiddlewaretoken]').val());
+                },
+                success: function(data) {
+                    alert(data);
+                }
+            });
+        }
+
+        $('.thumbitup').on('click', function() {
+            thumbit({{ object.pk }}, 1);
+        })
+        $('.thumbitdown').on('click', function() {
+            thumbit({{ object.pk }}, 0);
+        })
+    </script>
+{% endblock %}

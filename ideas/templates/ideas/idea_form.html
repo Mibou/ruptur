@@ -10,7 +10,7 @@
                 {% csrf_token %}
                 {{ form|crispy }}
                 <button type="submit" class="btn btn-primary">Enregistrer</button>
-                <a href="{% url 'projects-contribute' %}">
+                <a href="{% url 'contribute' %}">
                     <button type="button" class="btn btn-primary">Retour</button>
                 </a>
             </form>

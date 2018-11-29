@@ -28,5 +28,5 @@ class POI(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def get_url(self):
+    def get_absolute_url(self):
         pass

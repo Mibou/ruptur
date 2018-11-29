@@ -31,6 +31,9 @@
 #filter a:nth-child(odd) .poiListItem {
     background-color: #ccd;
 }
+#filter a {
+    color: inherit;
+}
 
 .poiIconWrapper {
     float: left;

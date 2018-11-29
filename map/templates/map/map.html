@@ -14,7 +14,7 @@
             </div>
         </div>
     </div>
-    <div class="container mt-3"><a class="nav-link" href="{% if user.is_authenticated %}/contribute{% else %}/accounts/login-signup{% endif %}"><button type="button" class="btn btn-primary btn-lg btn-block">Je veux contribuer</button></a></div>
+    <div class="container mt-3"><a class="nav-link" href="{% url 'contribute' %}"><button type="button" class="btn btn-primary btn-lg btn-block">Je veux contribuer</button></a></div>
 {% endblock %}
 
 {% block script %}

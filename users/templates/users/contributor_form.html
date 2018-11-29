@@ -6,10 +6,52 @@
 {% block content %}
     <div class="container">
         <div class="row justify-content-md-center">
-            <form method="post" class="col-lg-6 col-lg-offset-3">
+            <form method="post" class="col-lg-8 col-lg-offset-3" novalidate>
                 {% csrf_token %}
-                {{ form|crispy }}
-                <button type="submit" class="btn btn-primary">Enregistrer</button>
+                <div class="h3">Qui es-tu?</div>
+                <div class="form-group">
+                    <label for="email">Email</label><input type="text" id="email" name="email" class="form-control" autocomplete="email" value="{{ request.user.email }}" />
+                </div>
+                {% if not request.user.id %}
+                <div class="form-group displaypass d-none">
+                    <label for="password">Mot de passe</label><input type="password" name="password" id="password" class="form-control" autocomplete="current-password" />
+                </div>
+                {% endif %}
+
+                <div class="profile{% if not request.user.id %} d-none{% endif %}">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                        <label for="first_name">Prénom</label><input type="text" id="first_name" name="first_name" class="form-control" autocomplete="first_name" value="{{ request.user.first_name }}" />
+                        </div>
+                        <div class="form-group col-md-6">
+                        <label for="last_name">Nom</label><input type="text" id="last_name" name="last_name" class="form-control" autocomplete="last_name" value="{{ request.user.last_name }}" />
+                        </div>
+                    </div>
+                    {{ form.city|as_crispy_field }}
+                    {{ form.phonenumber|as_crispy_field }}
+
+                    <div class="h3">Ta contribution</div>
+                    {{ form.professional_profile|as_crispy_field }}
+                    {{ form.position|as_crispy_field }}
+                    <div class="pt-4">
+                        <span class="font-weight-bold">Décris en une phrase ton apport à la communauté</span>
+                        {{ form.description|as_crispy_field }}
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            {{ form.sector|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-md-6">
+                            {{ form.skill|as_crispy_field }}
+                        </div>
+                    </div>
+                </div>
+
+                {% if request.user.id %}
+                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                {% else %}
+                    <button type="button" class="btn btn-primary savebutton">Vérifier</button>
+                {% endif %}
                 <a href="{% url 'contribute' %}">
                     <button type="button" class="btn btn-primary">Retour</button>
                 </a>
@@ -19,4 +61,43 @@
 {% endblock %}
 {% block script %}
     {{ form.media }}
+    <script>
+        function check_email(t) {
+            $.ajax({
+                url: '{% url "api_dispatch_list" resource_name="user" api_name="v1" %}?format=json',
+                contentType: 'application/json',
+                type: 'GET',
+                async: true,
+                data: {
+                    'email__exact': $('#email').val()
+                },
+                beforeSend: function(jqXHR, settings) {
+                    // Pull the token out of the DOM.
+                    jqXHR.setRequestHeader('X-CSRFToken', $('input[name=csrfmiddlewaretoken]').val());
+                },
+                success: function(data) {
+                    if (data.objects.length > 0) {
+                        $('.displaypass').removeClass('d-none');
+                        $('.savebutton').html('Se connecter');
+                        $('.savebutton').prop("type", "submit");
+                    } else {
+                        $('.displaypass').removeClass('d-none');
+                        $('.profile').removeClass('d-none')
+                        $('.savebutton').html('Enregistrer');
+                        $('.savebutton').prop("type", "submit");
+                    }
+                }
+            });
+        }
+
+        function hide_pass() {
+            $('.displaypass').addClass('d-none');
+            $('.profile').addClass('d-none');
+            $('.savebutton').prop("type", "button");
+            $('.savebutton').html('Vérifier');
+        }
+
+        $('.savebutton').on('click', check_email)
+        $('#email').on('keydown', hide_pass)
+    </script>
 {% endblock %}

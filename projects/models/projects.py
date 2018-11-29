@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from ruptur.libs.virtual_delete import VirtualDelete
 from ruptur.libs.datation import Datation
 from ruptur.libs.poi import POI
@@ -53,8 +54,17 @@ class Project(VirtualDelete, Datation):
     skills = models.ManyToManyField('users.Skill')
     creator = models.ForeignKey(
         'users.Contributor',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name="projects"
     )
+    contributors = models.ManyToManyField(
+        'users.User',
+        through='ProjectContributor',
+        related_name='projects'
+    )
+
+    def get_absolute_url(self):
+        return reverse('project-detail', kwargs={'pk': self.pk})
 
     def __str__(self):
         return self.title
@@ -77,15 +87,47 @@ class Project(VirtualDelete, Datation):
     def get_icon(self):
         return self.CLASS_ICON
 
-    def get_url(self):
-        return ''
-
     def get_location(self) -> Optional[Point]:
         if self.latitude and self.longitude:
-            return Point(self.longitude, self.latitude)
+            return Point(self.get_longitude(), self.get_latitude())
 
 
 POI.register(Project)
+
+
+class ProjectContributor(models.Model):
+
+    ACCEPTED = 'AX'
+    REQUESTED = 'RQ'
+    REFUSED = 'RF'
+    STATUS_CHOICES = (
+        (ACCEPTED, 'Accepté'),
+        (REQUESTED, 'Demandé'),
+        (REFUSED, 'Refusé'),
+    )
+
+    user = models.ForeignKey(
+        'users.User',
+        related_name='membership',
+        on_delete=models.CASCADE
+    )
+    project = models.ForeignKey(
+        'projects.Project',
+        related_name='membership',
+        on_delete=models.CASCADE
+    )
+    status = models.CharField(
+        max_length=2,
+        choices=STATUS_CHOICES,
+        default=REQUESTED,
+    )
+
+    def __unicode__(self):
+        return "%s is in group %s (as %s)" % (
+            self.user,
+            self.project,
+            self.status
+        )
 
 
 class Invitation(models.Model):

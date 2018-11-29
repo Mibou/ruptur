@@ -2,6 +2,7 @@ from django.db import models
 from ruptur.libs.virtual_delete import VirtualDelete
 from ruptur.libs.datation import Datation
 from ruptur.libs.poi import POI
+from django.urls import reverse
 from django.contrib.gis.geos import Point
 from typing import Optional
 from .users import User
@@ -17,32 +18,53 @@ __all__ = [
 class Contributor(VirtualDelete, Datation):
     CLASS_ICON = 'user'
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        related_name='contributor'
+    )
     city = models.ForeignKey(
         'geography.City',
-        on_delete=models.PROTECT
+        on_delete=models.PROTECT,
+        verbose_name='Ville'
     )
     sector = models.ForeignKey(
         'users.Sector',
-        on_delete=models.PROTECT
+        on_delete=models.PROTECT,
+        verbose_name='Secteur'
     )
-    phonenumber = models.CharField(max_length=10, blank=True, null=True)
-    company = models.CharField(max_length=120)
+    phonenumber = models.CharField(
+        max_length=10,
+        blank=True,
+        null=True,
+        verbose_name='Téléphone'
+    )
+    company = models.CharField(
+        max_length=120,
+        verbose_name='Entreprise'
+    )
     position = models.ForeignKey(
         'users.Position',
-        on_delete=models.PROTECT
+        on_delete=models.PROTECT,
+        verbose_name='Fonction'
     )
     skill = models.ForeignKey(
         'users.Skill',
-        on_delete=models.PROTECT
+        on_delete=models.PROTECT,
+        verbose_name='Une qualité'
     )
     professional_profile = models.CharField(
         max_length=120,
-        help_text='Copie/colle ici l\'URL de ton profil LinkedIn, Viadéo, ...'
+        help_text='Copie/colle ici l\'URL de ton profil LinkedIn, Viadéo, ...',
+        verbose_name='Lien professionel'
     )
     description = models.TextField(
-        help_text='Ce que verront les autres membres en 1er sur ton profil'
+        help_text='Ce que verront les autres membres en 1er sur ton profil',
+        verbose_name=''
     )
+
+    def get_absolute_url(self):
+        return reverse('contributor-details', kwargs={'pk': self.user.pk})
 
     def __str__(self):
         return "%s %s (%s)" % (
@@ -68,9 +90,6 @@ class Contributor(VirtualDelete, Datation):
 
     def get_icon(self):
         return self.CLASS_ICON
-
-    def get_url(self):
-        return ''
 
     def get_location(self) -> Optional[Point]:
         if self.latitude and self.longitude:

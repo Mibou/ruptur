@@ -3,11 +3,13 @@ from .projects import (
     Nature,
     Tag,
     Invitation,
+    ProjectContributor
 )
 
 __all__ = [
     'Nature',
     'Project',
     'Tag',
-    'Invitation'
+    'Invitation',
+    'ProjectContributor'
 ]

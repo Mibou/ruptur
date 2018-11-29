@@ -7,4 +7,12 @@ from .models import (
 class ProjectForm(ModelForm):
     class Meta:
         model = Project
-        fields = ['title', 'description', 'nature', 'tags', 'skills', 'creator']
+        fields = [
+            'title',
+            'description',
+            'nature',
+            'tags',
+            'skills',
+            'creator',
+            'contributors'
+        ]
