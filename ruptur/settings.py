@@ -22,7 +22,7 @@ GDAL_LIBRARY_PATH = os.environ.get('GDAL_LIBRARY_PATH')
 HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'haystack_elasticsearch5.Elasticsearch5SearchEngine',
-        'URL': 'http://127.0.0.1:9200/',
+        'URL': 'https://i1zxwswlso:agm4j6cctw@banyan-634032811.eu-west-1.bonsaisearch.net/',
         'INDEX_NAME': 'haystack',
     }
 }

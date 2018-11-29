@@ -35,7 +35,7 @@ class IdeaUpdate(UpdateView):
             return None
 
     def get_success_url(self, **kwargs):
-        if kwargs != None:
+        if kwargs:
             return reverse_lazy('idea-form', kwargs={'pk': kwargs['pk']})
         else:
             return reverse_lazy('idea-form', args=(self.object.id,))
@@ -77,16 +77,25 @@ class IdeaUpdate(UpdateView):
 
     def post(self, request, **kwargs):
         pk = None
-        if request.user.id:
-            if hasattr(request.user, 'contributor'):
-                ContributorUpdate.update_contributor(request)
-                ContributorUpdate.update_user(request)
-        else:
+
+        # Not logged in
+        if not request.user.id:
             try:
+                # Loggin and redirect
                 ContributorUpdate.login(request)
+                return HttpResponseRedirect(reverse_lazy('idea-form'))
+
             except User.DoesNotExist:
+
+                # Or create user
                 ContributorUpdate.create_user_contributor(request)
 
+        elif hasattr(request.user, 'contributor'):
+            # Update user and contributor
+            ContributorUpdate.update_contributor(request)
+            ContributorUpdate.update_user(request)
+
+        # Create idea
         if kwargs.get('pk'):
             pk = kwargs.get('pk')
             self.update_idea(self.get_object(), self.request)
