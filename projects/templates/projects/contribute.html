@@ -8,16 +8,16 @@
 
 {% block content %}
 <div class="container jumbotron">
-    <div class="contribute-title">Je contribue en</div>
+    <div class="contribute-title">Je rejoins le réseau RUPTUR en</div>
     <ul class="nav justify-content-center">
     <li class="nav-item">
-        <a class="nav-link" href="{% url 'contributor-form' %}"><i class="fa fa-user"></i> Créant mon profil</a>
+        <a class="nav-link" href="{% url 'contributor-form' %}"><i class="fa fa-user"></i> Référençant mes compétences</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="{% url 'project-form' %}"><i class="fa fa-rocket"></i> Créant un projet bleu</a>
+        <a class="nav-link" href="{% url 'project-form' %}"><i class="fa fa-rocket"></i> Proposant un projet bleu</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="{% url 'idea-form' %}"><i class="fa fa-lightbulb"></i> Publiant une idée / demande</a>
+        <a class="nav-link" href="{% url 'idea-form' %}"><i class="fa fa-lightbulb"></i> Partageant une idée / demande</a>
     </li>
     </ul>
     {% if request.user.contributor %}
