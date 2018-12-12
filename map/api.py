@@ -36,7 +36,7 @@ class POIResource(Resource):
         self.is_authenticated(request)
         self.throttle_check(request)
 
-        limit = int(request.GET.get('limit', 20))
+        limit = int(request.GET.get('limit', 50))
         offset = int(request.GET.get('offset', 0))
         page = (offset / limit) + 1
 
