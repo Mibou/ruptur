@@ -48,7 +48,7 @@ class IdeaUpdate(UpdateView):
             city = None
             if (
                 self.request.user.id and
-                self.request.user.contributor and
+                hasattr(self.request.user, 'contributor') and
                 self.request.user.contributor.city
             ):
                 city = self.request.user.contributor.city
