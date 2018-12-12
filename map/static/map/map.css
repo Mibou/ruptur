@@ -52,10 +52,17 @@
 
 .poiContentTitle {
     font-size: 18px;
+    width: 400px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .poiContentSubtitle {
     font-size: 14px;
+    width: 400px;
+    white-space: nowrap;
+    overflow: hidden;
     text-overflow: ellipsis;
 }
 
