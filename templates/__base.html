@@ -34,7 +34,6 @@
                     <div class="collapse navbar-collapse" id="globalNavbar">
                         <form class="form-inline form-navbar my-2 my-lg-0 order-2" action="#">
                             <input class="form-control" name="s" type="text" placeholder="Trouvez un projet, une personne...">
-                            <a class="nav-link" href="{% url 'contribute' %}"><button type="button" class="ml-2 form-control btn btn-primary btn-md">Je veux contribuer</button></a>
                             <div>
                                 {% if request.user.is_authenticated %}<a class="nav-link" href="{% url 'contributor-details' request.user.id %}"><i class="fa fa-user"></i></a>
                                 {% else %}
