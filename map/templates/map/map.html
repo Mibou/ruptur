@@ -2,19 +2,42 @@
 {% load static %}
 
 {% block style %}
+    <!-- Top contribute bar -->
+    <link rel="stylesheet" type="text/css" href="{% static 'map/bar.css' %}">
+
     <!-- Map -->
     <link rel="stylesheet" type="text/css" href="{% static 'map/map.css' %}">
 {% endblock %}
 
 {% block content %}
-    <div class="my-fluid-container">
-        <div id="filter"></div>
-        <div id="carte">
-            <div id="map">
+    <div class="container">
+        <div class="row">
+            <div class="col text-center">
+                <div class="m-auto border border-dark rounded-circle square-icon"><i class="p-4 fa fa-6x fa-user"></i></div>
+                <p class="icon-subtitle">Référence tes compétences</p>
+            </div>
+
+            <div class="col text-center">
+                <div class="m-auto border border-dark rounded-circle square-icon"><i class="p-4 fa fa-6x fa-rocket"></i></div>
+                <p class="icon-subtitle">Concrétise tes projets bleus</p>
+            </div>
+
+            <div class="col text-center">
+                <div class="m-auto border border-dark rounded-circle square-icon"><i class="p-4 fa fa-6x fa-lightbulb"></i></div>
+                <p class="icon-subtitle">Exprime tes idées/demandes</p>
             </div>
         </div>
     </div>
-    <div class="container mt-3"><a class="nav-link" href="{% url 'contribute' %}"><button type="button" class="btn btn-primary btn-lg btn-block">Je veux contribuer</button></a></div>
+    <div class="my-fluid-container">
+        <div id="filter"></div>
+        <div id="map-wrapper">
+            <div id="map">
+            </div>
+            <div id="button-wrapper">
+                <a class="nav-link" href="{% url 'contribute' %}"><button type="button" class="btn btn-primary btn-lg btn-block">Rejoindre le réseau</button></a>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block script %}
