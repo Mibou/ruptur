@@ -9,13 +9,24 @@ String.prototype.format = function () {
 };
 
 var allMarkers = []
-var map = L.map('map').setView([46.871170, -1.013180], 9);
-var pois = []
 
+var map = L.map('map', {
+  center: [46.871170, -1.013180],
+  zoom: 9,
+  zoomControl: true
+});
+
+L.control.zoom({
+  position: 'topright',
+  zoomInText: '+',
+  zoomOutText: '-'
+}).addTo(map);
+
+var pois = []
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: 'Tiles Courtesy of <a href="https://www.openstreetmap.org/" target="_blank">Open street map</a> — Map data © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-  maxZoom: 18,
-  minZoom: 2,
+  maxZoom: 11,
+  minZoom: 4,
   reuseTiles: true,
   subdomains: 'abc',
 }).addTo(map);

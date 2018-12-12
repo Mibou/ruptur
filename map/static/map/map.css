@@ -1,9 +1,21 @@
+#map-wrapper {
+    margin-left: 500px;
+}
+
 #map {
-    position: static;
     top: 0;
-    left: 500px;
     height: 660px;
 }
+
+#button-wrapper {
+    position: relative;
+    z-index: 9999;
+    bottom: 70px;
+    width: 300px;
+    height: 10px;
+    margin: auto;
+}
+
 
 #filter {
     float: left;
@@ -72,19 +84,4 @@
 .poiContentTag {
     float: left;
     margin-right: 20px;
-}
-
-#map-wrapper {
-    width: 100%;
-    position: relative;
-}
-
-#button-wrapper {
-    position: relative;
-    z-index: 9999;
-    text-align: center;
-    bottom: 70px;
-    width: 20%;
-    height: 10px;
-    margin: auto;
 }
