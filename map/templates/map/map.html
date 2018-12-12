@@ -12,19 +12,26 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col text-center">
-                <div class="m-auto border border-dark rounded-circle square-icon"><i class="p-4 fa fa-6x fa-user"></i></div>
-                <p class="icon-subtitle">Référence tes compétences</p>
+            <div class="clickable-icon col text-center">
+                <a class="nav-link" href="{% url 'contributor-form' %}">
+                    <div class="m-auto border border-dark rounded-circle square-icon"><i class="p-4 fa fa-6x fa-user"></i></div>
+                    <p class="icon-subtitle">Référence tes<br /><span class="icon-subtitle font-weight-bold">compétences</span></p>
+
+                </a>
             </div>
 
-            <div class="col text-center">
-                <div class="m-auto border border-dark rounded-circle square-icon"><i class="p-4 fa fa-6x fa-rocket"></i></div>
-                <p class="icon-subtitle">Concrétise tes projets bleus</p>
+            <div class="clickable-icon col text-center">
+                <a class="nav-link" href="{% url 'project-form' %}">
+                    <div class="m-auto border border-dark rounded-circle square-icon"><i class="p-4 fa fa-6x fa-rocket"></i></div>
+                    <p class="icon-subtitle">Concrétise tes<br /><span class="icon-subtitle font-weight-bold">projets bleus</span></p>
+                </a>
             </div>
 
-            <div class="col text-center">
-                <div class="m-auto border border-dark rounded-circle square-icon"><i class="p-4 fa fa-6x fa-lightbulb"></i></div>
-                <p class="icon-subtitle">Exprime tes idées/demandes</p>
+            <div class="clickable-icon col text-center">
+                <a class="nav-link" href="{% url 'idea-form' %}">
+                    <div class="m-auto border border-dark rounded-circle square-icon"><i class="p-4 fa fa-6x fa-lightbulb"></i></div>
+                    <p class="icon-subtitle">Exprime tes<br /><span class="icon-subtitle font-weight-bold">idées/demandes</span></p>
+                </a>
             </div>
         </div>
     </div>
