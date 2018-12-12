@@ -62,7 +62,7 @@ function updatePois() {
 function generateInfoDiv(poi) {
   poiTags = '';
   poi.tags.forEach(function(poiTag) { poiTags = poiTags + '<div class="poiContentTag">#{0}</div>'.format(poiTag); });
-  return '<a id="{0}" href="{5}" class="link-magasin" title="{2}"><div class="poiListItem"><div class="poiIconWrapper"><div class="poiIcon"><i class="poiIcon fa fa-{1}"></i></div></div><div class="poiContent"><div class="poiContentTitle">{2}</div><div class="poiContentSubtitle">{3}</div><div class="poiContentTags">{4}</div></div></div></a>'.format(poi.id, poi.icon, poi.title, poi.subtitle, poiTags, poi.url);
+  return '<a id="{0}" href="{5}" class="link-magasin" title="{2}"><div class="poiListItem"><div class="poiIconWrapper"><div class="poiIcon"><i class="poiIcon fa fa-{1}"></i></div></div><div class="poiContent"><div class="poiContentTitle" title="{2}">{2}</div><div class="poiContentSubtitle" title="{3}">{3}</div><div class="poiContentTags">{4}</div></div></div></a>'.format(poi.id, poi.icon, poi.title, poi.subtitle, poiTags, poi.url);
 }
 
 $(document).on("click", ".link-magasin", function(){
