@@ -1,9 +1,10 @@
 from django.db import models
+from django.utils.translation import gettext_lazy as _
+from django.urls import reverse
+from django.contrib.gis.geos import Point
 from ruptur.libs.virtual_delete import VirtualDelete
 from ruptur.libs.datation import Datation
 from ruptur.libs.poi import POI
-from django.urls import reverse
-from django.contrib.gis.geos import Point
 from typing import Optional
 from .users import User
 
@@ -26,12 +27,12 @@ class Contributor(VirtualDelete, Datation):
     city = models.ForeignKey(
         'geography.City',
         on_delete=models.PROTECT,
-        verbose_name='Ville'
+        verbose_name=_('Ville')
     )
     sector = models.ForeignKey(
         'users.Sector',
         on_delete=models.PROTECT,
-        verbose_name='Secteur',
+        verbose_name=_('Secteur'),
         blank=True,
         null=True
     )
@@ -39,37 +40,37 @@ class Contributor(VirtualDelete, Datation):
         max_length=10,
         blank=True,
         null=True,
-        verbose_name='Téléphone',
+        verbose_name=_('Téléphone'),
     )
     company = models.CharField(
         max_length=120,
-        verbose_name='Entreprise',
+        verbose_name=_('Entreprise'),
         blank=True,
         null=True
     )
     position = models.ForeignKey(
         'users.Position',
         on_delete=models.PROTECT,
-        verbose_name='Fonction',
+        verbose_name=_('Fonction'),
         blank=True,
         null=True
     )
     skill = models.ForeignKey(
         'users.Skill',
         on_delete=models.PROTECT,
-        verbose_name='Une qualité',
+        verbose_name=_('Une qualité'),
         blank=True,
         null=True
     )
     professional_profile = models.CharField(
         max_length=120,
-        help_text='Copie/colle ici l\'URL de ton profil LinkedIn, Viadéo, ...',
-        verbose_name='Lien professionel',
+        help_text=_('Copie/colle ici l\'URL de ton profil LinkedIn, Viadéo, ...'),
+        verbose_name=_('Lien professionel'),
         blank=True,
         null=True
     )
     description = models.TextField(
-        help_text='Ce que verront les autres membres en 1er sur ton profil',
+        help_text=_('Ce que verront les autres membres en 1er sur ton profil'),
         verbose_name='',
         blank=True,
         null=True
@@ -107,6 +108,9 @@ class Contributor(VirtualDelete, Datation):
         if self.latitude and self.longitude:
             return Point(self.longitude, self.latitude)
 
+    class Meta:
+        verbose_name = _('contributeur')
+
 
 POI.register(Contributor)
 
@@ -117,6 +121,9 @@ class Sector(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = _('secteur')
+
 
 class Position(models.Model):
     name = models.CharField(max_length=100)
@@ -124,9 +131,15 @@ class Position(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = _('poste')
+
 
 class Skill(models.Model):
     name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name = _('competence')

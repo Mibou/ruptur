@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
 from ruptur.libs.virtual_delete import VirtualDelete
 from ruptur.libs.datation import Datation
 from django.contrib.gis.geos import Point
@@ -59,6 +60,9 @@ class Idea(VirtualDelete, Datation):
 
     def get_votes_down(self):
         return self.votes.filter(up=False)
+
+    class Meta:
+        verbose_name = _('idée')
 
 
 POI.register(Idea)

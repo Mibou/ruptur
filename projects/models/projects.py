@@ -1,9 +1,10 @@
 from django.db import models
 from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
+from django.contrib.gis.geos import Point
 from ruptur.libs.virtual_delete import VirtualDelete
 from ruptur.libs.datation import Datation
 from ruptur.libs.poi import POI
-from django.contrib.gis.geos import Point
 from typing import Optional
 from tagging.fields import TagField
 
@@ -47,20 +48,20 @@ class Project(VirtualDelete, Datation):
 
     title = models.CharField(
         max_length=250,
-        verbose_name='Titre du projet'
+        verbose_name=_('Titre du projet')
     )
     description = models.TextField(
-        verbose_name='Description du projet'
+        verbose_name=_('Description du projet')
     )
     nature = models.ForeignKey(
         'projects.Nature',
         on_delete=models.PROTECT,
-        verbose_name='Nature du chantier'
+        verbose_name=_('Nature du chantier')
     )
     tags = TagField()
     skills = models.ManyToManyField(
         'users.Skill',
-        verbose_name='Compétences recherchées'
+        verbose_name=_('Compétences recherchées')
     )
     creator = models.ForeignKey(
         'users.Contributor',
@@ -101,6 +102,9 @@ class Project(VirtualDelete, Datation):
         if self.latitude and self.longitude:
             return Point(self.get_longitude(), self.get_latitude())
 
+    class Meta:
+        verbose_name = _('projet')
+
 
 POI.register(Project)
 
@@ -133,7 +137,7 @@ class ProjectContributor(models.Model):
     )
 
     def __unicode__(self):
-        return "%s is in group %s (as %s)" % (
+        return _("%s contribue au projet %s (en tant que %s)") % (
             self.user,
             self.project,
             self.status

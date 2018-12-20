@@ -8,7 +8,7 @@
         <div class="row justify-content-md-center">
             <form method="post" class="col-lg-8 col-lg-offset-3" novalidate>
                 {% csrf_token %}
-                <div class="h3">Qui es-tu?</div>
+                <div class="h3"><i class="fa fa-user mr-2"></i>Qui es-tu?</div>
                 <div class="form-group">
                     <label for="email">Email</label><input type="text" id="email" name="email" class="form-control" autocomplete="email" value="{{ request.user.email }}" {% if request.user.id %}readonly{% endif %} />
                 </div>
@@ -29,6 +29,7 @@
                     </div>
                     {{ form.city|as_crispy_field }}
                     {{ form.phonenumber|as_crispy_field }}
+                    {{ form.company|as_crispy_field }}
 
                     <div class="h3">Ta contribution</div>
                     {{ form.professional_profile|as_crispy_field }}
