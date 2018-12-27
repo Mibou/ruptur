@@ -36,28 +36,38 @@ class POIResource(Resource):
         self.is_authenticated(request)
         self.throttle_check(request)
 
-        limit = int(request.GET.get('limit', 50))
+        skills = bool(request.GET.get('skills', "true") == "true")
+        ideas = bool(request.GET.get('ideas', "true") == "true")
+        projects = bool(request.GET.get('projects', "true") == "true")
+        search = request.GET.get('search', '')
+
+        limit = int(request.GET.get('limit', 20))
         offset = int(request.GET.get('offset', 0))
         page = (offset / limit) + 1
 
         # Do the query.
         user_loc = None
-        if "lat" in kwargs and "lon" in kwargs:
-            user_lat = float(kwargs.pop('lat'))
-            user_lon = float(kwargs.pop('lon'))
-            user_loc = Point(user_lon, user_lat)
+        if "lat" in request.GET and "lon" in request.GET:
+            if request.GET["lat"] and request.GET["lon"]:
+                user_lat = float(request.GET['lat'])
+                user_lon = float(request.GET['lon'])
+                user_loc = Point(user_lon, user_lat)
 
         boundaries = None
-        if (("blat" in kwargs) and ("blon" in kwargs)
-                and ("tlat" in kwargs) and ("tlon" in kwargs)):
-            blat = float(kwargs['blat'])
-            blon = float(kwargs['blon'])
-            tlat = float(kwargs['tlat'])
-            tlon = float(kwargs['tlon'])
-            boundaries = (Point(blon, blat), Point(tlon, tlat))
-            limit = None
+        if (("bl_lat" in request.GET) and ("bl_lon" in request.GET)
+                and ("tr_lat" in request.GET) and ("tr_lon" in request.GET)):
+            if (request.GET["bl_lat"] and request.GET["bl_lon"]
+                    and request.GET["tr_lat"] and request.GET["tr_lon"]):
+                blat = float(request.GET['bl_lat'])
+                blon = float(request.GET['bl_lon'])
+                tlat = float(request.GET['tr_lat'])
+                tlon = float(request.GET['tr_lon'])
+                boundaries = (Point(blon, blat), Point(tlon, tlat))
+                # limit = None
 
-        if boundaries or user_loc:
+        # Temporarily disabled
+        # if boundaries or user_loc:
+        if False:
             sqs = SearchQuerySet().models(
                 Contributor, Idea, Project
             )
@@ -69,9 +79,9 @@ class POIResource(Resource):
                 ).order_by('distance')
         else:
             sqs = (
-                list(Idea.objects.all()) +
-                list(Contributor.objects.all()) +
-                list(Project.objects.all())
+                list(Idea.search(search) if ideas else []) +
+                list(Contributor.search(search) if skills else []) +
+                list(Project.search(search) if projects else [])
             )
 
         paginator = Paginator(sqs, limit)
