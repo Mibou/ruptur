@@ -1,9 +1,11 @@
 from django.db import models
+from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
 from django.contrib.gis.geos import Point
 from ruptur.libs.virtual_delete import VirtualDelete
 from ruptur.libs.datation import Datation
+from ruptur.libs.searchable import Searchable
 from ruptur.libs.poi import POI
 from typing import Optional
 from .users import User
@@ -16,7 +18,7 @@ __all__ = [
 ]
 
 
-class Contributor(VirtualDelete, Datation):
+class Contributor(VirtualDelete, Datation, Searchable):
     CLASS_ICON = 'user'
 
     user = models.OneToOneField(
@@ -84,6 +86,13 @@ class Contributor(VirtualDelete, Datation):
             self.user.first_name,
             self.user.last_name,
             self.city
+        )
+
+    @classmethod
+    def search(cls, match):
+        return cls.objects.filter(
+            Q(user__first_name__icontains=match) |
+            Q(user__last_name__icontains=match)
         )
 
     def get_tags(self):

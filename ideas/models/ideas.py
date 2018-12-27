@@ -1,8 +1,10 @@
 from django.db import models
+from django.db.models import Q
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from ruptur.libs.virtual_delete import VirtualDelete
 from ruptur.libs.datation import Datation
+from ruptur.libs.searchable import Searchable
 from django.contrib.gis.geos import Point
 from ruptur.libs.poi import POI
 from typing import Optional
@@ -15,7 +17,7 @@ __all__ = [
 ]
 
 
-class Idea(VirtualDelete, Datation):
+class Idea(VirtualDelete, Datation, Searchable):
     CLASS_ICON = 'lightbulb'
 
     title = models.CharField(max_length=250)
@@ -29,6 +31,12 @@ class Idea(VirtualDelete, Datation):
 
     def __str__(self):
         return "%s (%s)" % (self.title, self.creator.user.get_full_name())
+
+    @classmethod
+    def search(cls, match):
+        return cls.objects.filter(
+            Q(title__icontains=match) | Q(description__icontains=match)
+        )
 
     def get_absolute_url(self):
         return reverse('idea-detail', kwargs={'pk': self.pk})

@@ -1,9 +1,11 @@
 from django.db import models
+from django.db.models import Q
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.contrib.gis.geos import Point
 from ruptur.libs.virtual_delete import VirtualDelete
 from ruptur.libs.datation import Datation
+from ruptur.libs.searchable import Searchable
 from ruptur.libs.poi import POI
 from typing import Optional
 from tagging.fields import TagField
@@ -43,7 +45,7 @@ class Tag(models.Model):
         return self.name
 
 
-class Project(VirtualDelete, Datation):
+class Project(VirtualDelete, Datation, Searchable):
     CLASS_ICON = 'rocket'
 
     title = models.CharField(
@@ -79,6 +81,12 @@ class Project(VirtualDelete, Datation):
 
     def __str__(self):
         return self.title
+
+    @classmethod
+    def search(cls, match):
+        return cls.objects.filter(
+            Q(title__icontains=match) | Q(description__icontains=match)
+        )
 
     def get_tags(self):
         return [str(tag) for tag in self.tags.split(',')]
