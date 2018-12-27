@@ -1,3 +1,5 @@
+/* map */
+
 #map-wrapper {
     margin-left: 500px;
 }
@@ -16,7 +18,7 @@
     margin: auto;
 }
 
-
+/* filter bar */
 #filter {
     float: left;
     left: 0px;
@@ -84,4 +86,17 @@
 .poiContentTag {
     float: left;
     margin-right: 20px;
+}
+
+.advanced-filter {
+    cursor: pointer;
+}
+
+/* location icon */
+.fa.fa-w-12 {
+    width: 0.75em;
+}
+
+.around-me {
+    cursor: pointer;
 }

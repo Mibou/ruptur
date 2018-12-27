@@ -8,6 +8,48 @@ String.prototype.format = function () {
   });
 };
 
+function savePosition(position) {
+  $('#user-lat').val(position.coords.latitude);
+  $('#user-lon').val(position.coords.longitude);
+
+  if ($('#user-lat').val() != "" && $('user-lon').val() != "") {
+    map.panTo([parseFloat($('#user-lat').val()), parseFloat($('#user-lon').val())]);
+  }
+
+  updatePois();
+}
+
+function geolocationBlocked() {
+  $(document).trigger("add-alerts", [{
+    "message": "Vous n'avez pas autorisé la <strong>géolocalisation</strong> ! Autorisez la géolocation et rechargez la page !",
+    "priority": "danger"
+  }]);
+}
+function geolocationFailed() {
+  $(document).trigger("add-alerts", [{
+    "message": "Nous n'avons pas réussi à vous <strong>géolocaliser</strong> ! Essayez d'autres méthodes de recherche !",
+    "priority": "danger"
+  }]);
+}
+
+function locationFailure(error) {
+  if (error.code == error.PERMISSION_DENIED)
+    geolocationBlocked();
+  else
+    geolocationFailed();
+}
+
+function getLocation() {
+  if (navigator.geolocation)
+    navigator.geolocation.getCurrentPosition(savePosition, locationFailure);
+  else
+    geolocationFailed();
+}
+
+$(document).on("click", ".around-me", function(){
+  getLocation();
+});
+
 var allMarkers = []
 
 var map = L.map('map', {
@@ -34,6 +76,15 @@ map.removeControl(map.zoomControl);
 
 function updatePois() {
   $.each(allMarkers, function(index, marker) { marker.remove() });
+  $('#filter').infiniteScrollHelper('destroy');
+  $('#filter').html('');
+  setInfiniteScroll();
+}
+
+function getPois(page, done) {
+  skills = $('#skillsCheck').is(':checked');
+  projects = $('#projectsCheck').is(':checked');
+  ideas = $('#ideasCheck').is(':checked');
 
   bounds = map.getBounds();
   bottom_left = bounds.getSouthWest();
@@ -43,29 +94,57 @@ function updatePois() {
   tr_lat= top_right.lat;
   tr_lon= top_right.lng;
 
+  if(page==undefined)
+    page = 1
+
   $.ajax({
-    url: '/api/v1/poi/?format=json',
+    url: '/api/v1/poi/?format=json&page='+page,
     contentType: 'application/json',
     type: 'GET',
     async: false,
     data: {
+      "lat": $('#user-lat').val(),
+      "lon": $('#user-lon').val(),
       "bl_lat": bottom_left.lat,
       "bl_lon": bottom_left.lng,
       "tr_lat": top_right.lat,
-      "tr_lon": top_right.lng
+      "tr_lon": top_right.lng,
+      "skills": skills,
+      "projects": projects,
+      "ideas": ideas,
+      "search": $('#searchText').val()
     },
     success: function(data) {
-      $('#filter').html('');
+
+      if(data['meta']['next'] == false) {
+        $('#filter').infiniteScrollHelper('destroy');
+      }
+
       pois = data.objects
       pois.forEach(function(poi) {
         $('#filter').append(generateInfoDiv(poi))
         currentMarker = L.marker(
-          [poi.latitude, poi.longitude], {
-          clickable: true
-        })
+          [poi.latitude, poi.longitude],
+          { clickable: true }
+        );
         currentMarker.addTo(map);
         allMarkers.push(currentMarker);
       });
+
+      done();
+    }
+  });
+}
+
+function setInfiniteScroll() {
+  $('#filter').infiniteScrollHelper({
+    startingPageCount: 0,
+    loadMore: function(page, done) {
+      // load some data, parse some data
+      getPois(page, done);
+    },
+    doneLoading: function() {
+      return false;
     }
   });
 }
@@ -82,6 +161,9 @@ $(document).on("click", ".link-magasin", function(){
   Lat_Lng = new L.LatLng(poi.latitude, poi.longitude);
   map.setView(Lat_Lng , 15, {pan: {animate:true, duration: 1}});
 });
+
+$(document).on("keyup", "#searchText", updatePois);
+$(document).on("click", ".custom-control-input", updatePois);
 
 updatePois();
 

@@ -7,37 +7,68 @@
 
     <!-- Map -->
     <link rel="stylesheet" type="text/css" href="{% static 'map/map.css' %}">
+
 {% endblock %}
 
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col text-center">
-                L'outil de travail du réseau RUPTUR
+            <div class="col text-center pb-1">
+                L'outil de travail du réseau <span class="text-uppercase">ruptur</span>
             </div>
         </div>
         <div class="row">
             <div class="clickable-icon col text-center">
-                <a class="nav-link" href="{% url 'contributor-form' %}">
-                    <div class="m-auto border border-dark rounded-circle square-icon"><i class="p-4 fa fa-6x fa-user"></i></div>
-                    <p class="icon-subtitle">Référence tes<br /><span class="icon-subtitle font-weight-bold">compétences</span></p>
-
-                </a>
+                <div class="m-auto border border-dark rounded-circle square-icon"><a class="nav-link" href="{% url 'contributor-form' %}"><i class="pt-3 fa fa-6x fa-user"></i></a></div>
+                <p class="text-uppercase"><a class="nav-link" href="{% url 'contributor-form' %}">Référence tes<br /><span class="text-uppercase font-weight-bold">compétences</span></a></p>
             </div>
 
             <div class="clickable-icon col text-center">
-                <a class="nav-link" href="{% url 'project-form' %}">
-                    <div class="m-auto border border-dark rounded-circle square-icon"><i class="p-4 fa fa-6x fa-rocket"></i></div>
-                    <p class="icon-subtitle">Concrétise tes<br /><span class="icon-subtitle font-weight-bold">projets bleus</span></p>
-                </a>
+                <div class="m-auto border border-dark rounded-circle square-icon"><a class="nav-link" href="{% url 'project-form' %}"><i class="pt-4 fa fa-6x fa-rocket"></i></a></div>
+                <p class="text-uppercase"><a class="nav-link" href="{% url 'project-form' %}">Concrétise tes<br /><span class="text-uppercase font-weight-bold">projets bleus</span></a></p>
             </div>
 
             <div class="clickable-icon col text-center">
-                <a class="nav-link" href="{% url 'idea-form' %}">
-                    <div class="m-auto border border-dark rounded-circle square-icon"><i class="p-4 fa fa-6x fa-lightbulb"></i></div>
-                    <p class="icon-subtitle">Exprime tes<br /><span class="icon-subtitle font-weight-bold">idées/demandes</span></p>
-                </a>
+                <div class="m-auto border border-dark rounded-circle square-icon"><a class="nav-link" href="{% url 'idea-form' %}"><i class="p-3 fa fa-6x fa-lightbulb"></i></a></div>
+                <p class="text-uppercase"><a class="nav-link" href="{% url 'idea-form' %}">Exprime tes<br /><span class="text-uppercase font-weight-bold">idées/demandes</span></a></p>
             </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="form-group">
+            <div class="input-group mb-2 w-50 mx-auto">
+                <div class="input-group-prepend">
+                    <div class="input-group-text"><i class="fa fa-search"></i></div>
+                </div>
+                <input type="text" class="form-control" id="searchText" placeholder="Trouver un projet, une personne..." />
+                <div class="advanced-filter mt-1 ml-2">
+                    <i class="fa fa-2x fa-sliders-h" data-toggle="collapse" data-target="#advanced-filters-collapse" aria-expanded="false" aria-controls="advanced-filters-collapse"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container collapse" id="advanced-filters-collapse">
+        <div class="d-flex justify-content-center">
+            <div class="custom-control custom-checkbox custom-control-inline">
+                <input type="checkbox" class="custom-control-input" id="skillsCheck" checked>
+                <label class="custom-control-label" for="skillsCheck">Compétences</label>
+            </div>
+            <div class="custom-control custom-checkbox custom-control-inline">
+                <input type="checkbox" class="custom-control-input" id="projectsCheck" checked>
+                <label class="custom-control-label" for="projectsCheck">Projets</label>
+            </div>
+            <div class="custom-control custom-checkbox custom-control-inline">
+                <input type="checkbox" class="custom-control-input" id="ideasCheck" checked>
+                <label class="custom-control-label" for="ideasCheck">Idées / demandes</label>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-center around-me pb-2">
+            <div class="align-items-center"><span class="fa fa-w-12 fa-2x align-middle"><svg aria-hidden="true" data-prefix="fas" data-icon="location" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" ><path fill="currentColor" d="M496 224h-50.88C431.61 143.66 368.34 80.39 288 66.88V16c0-8.84-7.16-16-16-16h-32c-8.84 0-16 7.16-16 16v50.88C143.66 80.39 80.39 143.66 66.88 224H16c-8.84 0-16 7.16-16 16v32c0 8.84 7.16 16 16 16h50.88C80.39 368.34 143.66 431.61 224 445.12V496c0 8.84 7.16 16 16 16h32c8.84 0 16-7.16 16-16v-50.88c80.34-13.51 143.61-76.78 157.12-157.12H496c8.84 0 16-7.16 16-16v-32c0-8.84-7.16-16-16-16zM256 384c-70.7 0-128-57.31-128-128s57.3-128 128-128 128 57.31 128 128-57.3 128-128 128zm0-216c-48.6 0-88 39.4-88 88s39.4 88 88 88 88-39.4 88-88-39.4-88-88-88z" class=""></path></svg></span><span> Près de moi</span></div>
+            <input type="hidden" name="user-lat" id="user-lat" value="" />
+            <input type="hidden" name="user-lon" id="user-lon" value="" />
         </div>
     </div>
 
@@ -54,6 +85,9 @@
 {% endblock %}
 
 {% block script %}
+    <!-- Infinite scroll -->
+    <script src="{% static 'js/jquery.infinite-scroll-helper.min.js' %}"></script>
+
     <!-- Map -->
     <script src="{% static 'map/map.js' %}"></script>
 {% endblock %}
