@@ -12,10 +12,10 @@ django-heroku==0.3.1
 
 # Elasticsearch
 elasticsearch==5.5.1
-certifi==0.0.8
+certifi==2018.11.29
 
 # Django geonames API
-django-geonames-api==0.8.3
+django-geonames-api==0.8.8
 
 # Fancy forms
 django-crispy-forms==1.7.2
