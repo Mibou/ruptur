@@ -83,7 +83,7 @@ class POIResource(Resource):
                 boundaries = (Point(blon, blat), Point(tlon, tlat))
                 # limit = None
 
-        if boundaries or user_loc:
+        if (boundaries or user_loc) and not search:
             sqs = SearchQuerySet().models(*models_to_query)
             if boundaries:
                 sqs = sqs.within('location_poi', *boundaries)
