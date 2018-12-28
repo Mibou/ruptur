@@ -13,6 +13,7 @@ django-heroku==0.3.1
 # Elasticsearch
 elasticsearch==5.5.1
 certifi==2018.11.29
+-e git+https://github.com/JClubb3/django-haystack/@model_filter_es5#egg=django-haystack
 
 # Django geonames API
 django-geonames-api==0.8.8

@@ -1,16 +1,20 @@
 from django.conf.urls import url
 from django.http import Http404
 from django.core.paginator import Paginator, InvalidPage
+from django.contrib.gis.geos import Point
 
 from tastypie.resources import Resource
 from tastypie.utils import trailing_slash
 
 from haystack.query import SearchQuerySet
-from haystack.utils.geo import Point
+from haystack.models import SearchResult
 
 from users.models import Contributor
 from projects.models import Project
 from ideas.models import Idea
+
+import operator
+import functools
 
 
 class POIResource(Resource):
@@ -29,6 +33,22 @@ class POIResource(Resource):
                 name="api_get_search_poi"),
         ]
 
+    @classmethod
+    def get_models_to_query(cls, request):
+        skills = bool(request.GET.get('skills', "true") == "true")
+        ideas = bool(request.GET.get('ideas', "true") == "true")
+        projects = bool(request.GET.get('projects', "true") == "true")
+
+        models_to_query = []
+        if skills:
+            models_to_query.append(Contributor)
+        if ideas:
+            models_to_query.append(Idea)
+        if projects:
+            models_to_query.append(Project)
+
+        return models_to_query
+
     def get_search_poi(self, request, **kwargs):
         r""" Returns city around a defined location """
 
@@ -36,9 +56,7 @@ class POIResource(Resource):
         self.is_authenticated(request)
         self.throttle_check(request)
 
-        skills = bool(request.GET.get('skills', "true") == "true")
-        ideas = bool(request.GET.get('ideas', "true") == "true")
-        projects = bool(request.GET.get('projects', "true") == "true")
+        models_to_query = self.get_models_to_query(request)
         search = request.GET.get('search', '')
 
         limit = int(request.GET.get('limit', 20))
@@ -65,24 +83,19 @@ class POIResource(Resource):
                 boundaries = (Point(blon, blat), Point(tlon, tlat))
                 # limit = None
 
-        # Temporarily disabled
-        # if boundaries or user_loc:
-        if False:
-            sqs = SearchQuerySet().models(
-                Contributor, Idea, Project
-            )
+        if boundaries or user_loc:
+            sqs = SearchQuerySet().models(*models_to_query)
             if boundaries:
-                sqs = sqs.within('location', *boundaries)
+                sqs = sqs.within('location_poi', *boundaries)
             if user_loc:
                 sqs = sqs.distance(
-                    'location', user_loc
+                    'location_poi', user_loc
                 ).order_by('distance')
         else:
-            sqs = (
-                list(Idea.split_search(search) if ideas else []) +
-                list(Contributor.split_search(search) if skills else []) +
-                list(Project.split_search(search) if projects else [])
-            )
+            sqs = functools.reduce(operator.add, [
+                list(model_to_query.split_search(search))
+                for model_to_query in models_to_query
+            ])
 
         paginator = Paginator(sqs, limit)
 
@@ -119,12 +132,23 @@ class POIResource(Resource):
         return super(POIResource, self).get_object_list(request)
 
     def dehydrate(self, bundle):
-        bundle.data['id'] = bundle.obj.id
-        bundle.data['tags'] = bundle.obj.get_tags()
-        bundle.data['title'] = bundle.obj.get_title()
-        bundle.data['subtitle'] = bundle.obj.get_subtitle()
-        bundle.data['latitude'] = bundle.obj.get_latitude()
-        bundle.data['longitude'] = bundle.obj.get_longitude()
-        bundle.data['icon'] = bundle.obj.get_icon()
-        bundle.data['url'] = bundle.obj.get_absolute_url()
+
+        # from haystack queryset
+        if bundle.obj.__class__ is SearchResult:
+            poi_object = bundle.obj.object
+
+        # from classic django queryset
+        else:
+            poi_object = bundle.obj
+
+        bundle.data['id'] = poi_object.id
+        bundle.data['tags'] = poi_object.get_tags()
+        bundle.data['title'] = poi_object.get_title()
+        bundle.data['subtitle'] = poi_object.get_subtitle()
+        bundle.data['latitude'] = poi_object.get_latitude()
+        bundle.data['longitude'] = poi_object.get_longitude()
+        bundle.data['icon'] = poi_object.get_icon()
+        bundle.data['url'] = poi_object.get_absolute_url()
+
         return bundle
+

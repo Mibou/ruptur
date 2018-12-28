@@ -114,8 +114,8 @@ class Contributor(VirtualDelete, Datation, Searchable):
         return self.CLASS_ICON
 
     def get_location(self) -> Optional[Point]:
-        if self.latitude and self.longitude:
-            return Point(self.longitude, self.latitude)
+        if self.get_latitude() and self.get_longitude():
+            return Point(self.get_longitude(), self.get_latitude())
 
     class Meta:
         verbose_name = _('contributeur')
