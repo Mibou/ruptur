@@ -79,9 +79,9 @@ class POIResource(Resource):
                 ).order_by('distance')
         else:
             sqs = (
-                list(Idea.search(search) if ideas else []) +
-                list(Contributor.search(search) if skills else []) +
-                list(Project.search(search) if projects else [])
+                list(Idea.split_search(search) if ideas else []) +
+                list(Contributor.split_search(search) if skills else []) +
+                list(Project.split_search(search) if projects else [])
             )
 
         paginator = Paginator(sqs, limit)
