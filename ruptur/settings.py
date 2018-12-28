@@ -46,7 +46,7 @@ ALLOWED_HOSTS = ['localhost']
 # Application definition
 
 INSTALLED_APPS = [
-    'geography',
+    'geography.apps.GeographyConfig',
     'tagging',
     'members.apps.MembersConfig',
     'map.apps.MapConfig',
