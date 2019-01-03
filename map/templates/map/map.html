@@ -72,9 +72,10 @@
         </div>
     </div>
 
-    <div class="my-fluid-container">
-        <div id="filter"></div>
-        <div id="map-wrapper">
+    <div class="map-container">
+        <div id="filter" class="ui-layout-west"></div>
+        <div id="split" class="splitter"></div>
+        <div id="map-wrapper" class="ui-layout-center">
             <div id="map">
             </div>
             <div id="button-wrapper">
@@ -88,6 +89,10 @@
     <!-- Infinite scroll -->
     <script src="{% static 'js/jquery.infinite-scroll-helper.min.js' %}"></script>
 
+    <!-- Resizable pane-->
+    <script src="https://gitcdn.link/repo/RickStrahl/jquery-resizable/master/dist/jquery-resizable.min.js"></script>
+
     <!-- Map -->
     <script src="{% static 'map/map.js' %}"></script>
+
 {% endblock %}

@@ -1,7 +1,22 @@
 /* map */
 
+.map-container {
+    display: flex;
+    flex-direction: row;
+    border: 1px solid silver;
+    overflow: hidden;
+
+    /* avoid browser level touch actions */
+    xtouch-action: none;
+}
+
 #map-wrapper {
-    margin-left: 500px;
+    flex: 1 1 auto;
+    /* resizable */
+    width: 100%;
+    min-height: 200px;
+    min-width: 200px;
+    background: #eee;
 }
 
 #map {
@@ -14,36 +29,43 @@
     z-index: 9999;
     bottom: 70px;
     width: 300px;
-    height: 10px;
+    height: 0px;
     margin: auto;
+}
+
+.splitter {
+    flex: 0 0 auto;
+    width: 18px;
+    background: url(https://raw.githubusercontent.com/RickStrahl/jquery-resizable/master/assets/vsizegrip.png) center center no-repeat #111;
+    filter: invert(100%);
+    min-height: 200px;
+    cursor: col-resize;
 }
 
 /* filter bar */
 #filter {
-    float: left;
+    flex: 0 0 auto;
     left: 0px;
     margin-top: 0px;
-    width: 500px;
+    width: 50%;
     height: 660px;
     max-height: 660px;
     padding-left: 0px;
-    background-color: #ddd;
+    background-color: #f9f5f3;
     background-repeat: no-repeat;
-    position: absolute;
-    z-index: 9998;
     overflow: auto;
 }
 
 
 .poiListItem {
     height: 100px;
-    width: 480px;
+    width: 100%;
     padding: 20px 0px 20px 0px;
-    border: 1px solid #ccc;
+    /* border: 1px solid #ccc; */
 }
 
 #filter a:nth-child(odd) .poiListItem {
-    background-color: #ccd;
+    background-color: #fff;
 }
 #filter a {
     color: inherit;
@@ -66,7 +88,7 @@
 
 .poiContentTitle {
     font-size: 18px;
-    width: 400px;
+    width: 100%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -74,7 +96,7 @@
 
 .poiContentSubtitle {
     font-size: 14px;
-    width: 400px;
+    width: 100%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -82,6 +104,10 @@
 
 .poiContentTags {
     font-size: 12px;
+    max-height: 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .poiContentTag {
     float: left;

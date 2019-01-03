@@ -170,3 +170,10 @@ updatePois();
 map.on("moveend", function (e) {
   updatePois();
 });
+
+$(document).ready(function () {
+  $(".ui-layout-west").resizable({
+      handleSelector: ".splitter",
+      resizeHeight: false
+  });
+});
