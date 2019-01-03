@@ -1,0 +1,22 @@
+* {
+    color: #333;
+    font-family: 'Montserrat', arial;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Libre Baskerville', arial;
+}
+
+a {
+    color: #009BDB;
+}
+
+.btn-primary {
+    background-color: #009BDB;
+    border: 0px;
+}
+
+.btn-primary:hover {
+    background-color: #1D71B8;
+    border: 0px;
+}
