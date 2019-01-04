@@ -10,10 +10,11 @@
                 {% csrf_token %}
                 <div class="h3">Qui es-tu?</div>
                 <div class="form-group">
-                    <label for="email">Email</label><input type="text" id="email" name="email" class="form-control" autocomplete="email" value="{{ request.user.email }}" {% if request.user.id %}readonly{% endif %} />
+                    <label for="email">Email</label><input type="email" id="email" name="email" class="form-control" autocomplete="email" value="{{ request.user.email }}" {% if request.user.id %}readonly{% endif %} required />
                 </div>
                 {% if not request.user.id %}
                 <div class="form-group displaypass d-none">
+                    <div class="i-know-u small-information-text pb-1">On se connaît non ? Connecte-toi avec toi avec ton mot de passe</div>
                     <label for="password">Mot de passe</label><input type="password" name="password" id="password" class="form-control" autocomplete="current-password" />
                 </div>
                 {% endif %}
@@ -50,43 +51,7 @@
 {% endblock %}
 {% block script %}
     {{ contribform.media }}
-    <script>
-        function check_email(t) {
-            $.ajax({
-                url: '{% url "api_dispatch_list" resource_name="user" api_name="v1" %}?format=json',
-                contentType: 'application/json',
-                type: 'GET',
-                async: true,
-                data: {
-                    'email__exact': $('#email').val()
-                },
-                beforeSend: function(jqXHR, settings) {
-                    // Pull the token out of the DOM.
-                    jqXHR.setRequestHeader('X-CSRFToken', $('input[name=csrfmiddlewaretoken]').val());
-                },
-                success: function(data) {
-                    if (data.objects.length > 0) {
-                        $('.displaypass').removeClass('d-none');
-                        $('.savebutton').html('Se connecter');
-                        $('.savebutton').prop("type", "submit");
-                    } else {
-                        $('.displaypass').removeClass('d-none');
-                        $('.profile').removeClass('d-none')
-                        $('.savebutton').html('Enregistrer');
-                        $('.savebutton').prop("type", "submit");
-                    }
-                }
-            });
-        }
 
-        function hide_pass() {
-            $('.displaypass').addClass('d-none');
-            $('.profile').addClass('d-none');
-            $('.savebutton').prop("type", "button");
-            $('.savebutton').html('Vérifier');
-        }
-
-        $('.savebutton').on('click', check_email)
-        $('#email').on('keydown', hide_pass)
-    </script>
+    <!-- Login -->
+    <script src="{% static 'js/login.js' %}"></script>
 {% endblock %}

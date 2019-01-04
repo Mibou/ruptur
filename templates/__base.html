@@ -84,6 +84,9 @@
    integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
    crossorigin=""></script>
 
+        <script>
+            login_url = '{% url "api_dispatch_list" resource_name="user" api_name="v1" %}?format=json'
+        </script>
         {% block script %}
         {% endblock %}
     </body>
