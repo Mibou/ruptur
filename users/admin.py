@@ -50,7 +50,15 @@ class ContributorInline(admin.StackedInline):
 
 # Define a new User admin
 class CustomUserAdmin(UserAdmin):
-    inlines = (ContributorInline, )
+
+    def add_view(self, *args, **kwargs):
+        self.inlines = []
+        return super(CustomUserAdmin, self).add_view(*args, **kwargs)
+
+    def change_view(self, *args, **kwargs):
+        self.inlines = (ContributorInline, )
+        return super(CustomUserAdmin, self).change_view(*args, **kwargs)
+
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
     model = User

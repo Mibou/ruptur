@@ -85,7 +85,7 @@
    crossorigin=""></script>
 
         <script>
-            login_url = '{% url "api_dispatch_list" resource_name="user" api_name="v1" %}?format=json'
+            check_email_url = '{% url "api_dispatch_list" resource_name="user" api_name="v1" %}?format=json';
         </script>
         {% block script %}
         {% endblock %}

@@ -1,9 +1,17 @@
 main div.container div.contribute-title {
     text-transform: uppercase;
-    font-size: 18pt;
+    font-size: 14pt;
     text-align: center;
 }
 
 main div.container a.nav-link {
-    font-size: 18pt;
+    font-size: 14pt;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    margin-top: 0px !important;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__clear {
+    margin: 0px !important;
 }

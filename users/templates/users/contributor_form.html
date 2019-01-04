@@ -1,69 +1,46 @@
-{% extends '__base.html' %}
-
+{% extends 'projects/__base_contribute.html' %}
 {% load static %}
 {% load crispy_forms_tags %}
 
-{% block content %}
-    <div class="container">
-        <div class="row justify-content-md-center">
-            <form method="post" class="col-lg-8 col-lg-offset-3" novalidate>
-                {% csrf_token %}
-                <div class="h3"><i class="fa fa-user mr-2"></i>Qui es-tu?</div>
-                <div class="form-group">
-                    <label for="email">Email</label><input type="email" id="email" name="email" class="form-control" autocomplete="email" value="{{ request.user.email }}" {% if request.user.id %}readonly{% endif %} required />
-                </div>
-                {% if not request.user.id %}
-                <div class="form-group displaypass d-none">
-                    <div class="i-know-u small-information-text pb-1">On se connaît non ? Connecte-toi avec toi avec ton mot de passe</div>
-                    <label for="password">Mot de passe</label><input type="password" name="password" id="password" class="form-control" autocomplete="current-password" />
-                </div>
-                {% endif %}
+{% block child_content %}
+    {{ block.super }}
+    <div class="profile{% if not request.user.id %} d-none{% endif %}">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+            <label for="first_name">Prénom</label><input type="text" id="first_name" name="first_name" class="form-control" autocomplete="first_name" value="{{ request.user.first_name }}" />
+            </div>
+            <div class="form-group col-md-6">
+            <label for="last_name">Nom</label><input type="text" id="last_name" name="last_name" class="form-control" autocomplete="last_name" value="{{ request.user.last_name }}" />
+            </div>
+            <div class="form-group col-md-6">
+            <label for="company">Entreprise</label><input type="text" id="company" name="company" class="form-control" autocomplete="company" value="{{ request.user.contributor.company }}" />
+            </div>
+        </div>
 
-                <div class="profile{% if not request.user.id %} d-none{% endif %}">
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                        <label for="first_name">Prénom</label><input type="text" id="first_name" name="first_name" class="form-control" autocomplete="first_name" value="{{ request.user.first_name }}" />
-                        </div>
-                        <div class="form-group col-md-6">
-                        <label for="last_name">Nom</label><input type="text" id="last_name" name="last_name" class="form-control" autocomplete="last_name" value="{{ request.user.last_name }}" />
-                        </div>
-                    </div>
-                    {{ form.city|as_crispy_field }}
-                    {{ form.phonenumber|as_crispy_field }}
-                    {{ form.company|as_crispy_field }}
+        <div class="contribution-form-content">
+            {{ form.city|as_crispy_field }}
+            {{ form.phonenumber|as_crispy_field }}
 
-                    <div class="h3">Ta contribution</div>
-                    {{ form.professional_profile|as_crispy_field }}
-                    {{ form.position|as_crispy_field }}
-                    <div class="pt-4">
-                        <span class="font-weight-bold">Décris en une phrase ton apport à la communauté</span>
-                        {{ form.description|as_crispy_field }}
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            {{ form.sector|as_crispy_field }}
-                        </div>
-                        <div class="form-group col-md-6">
-                            {{ form.skill|as_crispy_field }}
-                        </div>
-                    </div>
+            <div class="h3">Mes compétences</div>
+            {{ form.professional_profile|as_crispy_field }}
+            {{ form.position|as_crispy_field }}
+            <div class="pt-4">
+                <span class="font-weight-bold">Décris en une phrase ton apport à la communauté</span>
+                {{ form.description|as_crispy_field }}
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    {{ form.sector|as_crispy_field }}
                 </div>
-
-                {% if request.user.id %}
-                    <button type="submit" class="btn btn-primary">Enregistrer</button>
-                {% else %}
-                    <button type="button" class="btn btn-primary savebutton">Vérifier</button>
-                {% endif %}
-                <a href="{% url 'contribute' %}">
-                    <button type="button" class="btn btn-primary">Retour</button>
-                </a>
-            </form>
+                <div class="form-group col-md-6">
+                    {{ form.skill|as_crispy_field }}
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}
-{% block script %}
-    {{ form.media }}
 
-    <!-- Login -->
-    <script src="{% static 'js/login.js' %}"></script>
+{% block script %}
+    {{ block.super }}
+    {{ form.media }}
 {% endblock %}

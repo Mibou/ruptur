@@ -1,25 +1,10 @@
-{% extends '__base.html' %}
+{% extends 'projects/__base_contribute.html' %}
 {% load static %}
+{% load crispy_forms_tags %}
 
-{% block style %}
-    <!-- Contribute -->
-    <link rel="stylesheet" type="text/css" href="{% static 'projects/contribute.css' %}">
-{% endblock %}
+{% block jumbotron_content %}
+    {{ block.super }}
 
-{% block content %}
-<div class="container jumbotron">
-    <div class="contribute-title">Je rejoins le réseau ruptur</div>
-    <ul class="nav justify-content-center">
-    <li class="nav-item">
-        <a class="nav-link" href="{% url 'contributor-form' %}"><i class="fa fa-user"></i> Je référence mes compétences</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{% url 'project-form' %}"><i class="fa fa-rocket"></i> Je propose un projet bleu</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{% url 'idea-form' %}"><i class="fa fa-lightbulb"></i> Je partage une idée / question</a>
-    </li>
-    </ul>
     {% if request.user.contributor %}
         {% if request.user.contributor.ideas.all or request.user.contributor.projects.all %}
             <div class="h4 row font-weight-bold pt-5 pb-2">Contributions :</div>
@@ -30,7 +15,7 @@
                 </div>
 
                 <div class="col">
-                <a href="{% url 'idea-form' idea.id %}"><i class="fa fa-pen pl-4"></i></a><i class="fa fa-times pr-2 pl-2"></i>
+                <a href="#" onclick="loadForm('{% url 'idea-form' idea.id %}'); return false;"><i class="fa fa-pen pl-4"></i></a><i class="fa fa-times pr-2 pl-2"></i>
                 </div>
             </div>
             {% endfor %}
@@ -41,11 +26,18 @@
                 </div>
 
                 <div class="col">
-                <a href="{% url 'project-form' project.id %}"><i class="fa fa-pen pl-4"></i></a><i class="fa fa-times pr-2 pl-2"></i>
+                <a href="#" onclick="loadForm('{% url 'project-form' project.id %}'); return false;"><i class="fa fa-pen pl-4"></i></a><i class="fa fa-times pr-2 pl-2"></i>
                 </div>
             </div>
             {% endfor %}
         {% endif %}
     {% endif %}
-</div>
+{% endblock %}
+
+{% block contribution_content %}
+{% endblock %}
+
+{% block script %}
+    {{ block.super }}
+    {{ contribform.media }}
 {% endblock %}

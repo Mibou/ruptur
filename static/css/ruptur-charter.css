@@ -32,5 +32,5 @@ a {
 
 /* To have the same height as other form controls for autocompletes */
 .select2-container .select2-selection--single {
-    height: inherit !important;
+    height: 38px !important;
 }

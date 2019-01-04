@@ -1,6 +1,6 @@
 function check_email(t) {
     $.ajax({
-        url: login_url,
+        url: check_email_url,
         contentType: 'application/json',
         type: 'GET',
         async: true,
@@ -13,19 +13,30 @@ function check_email(t) {
         },
         success: function(data) {
             if (data.objects.length > 0) {
-                $('.i-know-u').removeClass('d-none');
-                $('.displaypass').removeClass('d-none');
-                $('.savebutton').html('Se connecter');
-                $('.savebutton').prop("type", "submit");
+                set_login_mode();
             } else {
-                $('.i-know-u').addClass('d-none');
-                $('.displaypass').removeClass('d-none');
-                $('.profile').removeClass('d-none')
-                $('.savebutton').html('Enregistrer');
-                $('.savebutton').prop("type", "submit");
+                set_save_mode();
             }
         }
     });
+}
+
+function set_login_mode() {
+    $('.i-know-u').removeClass('d-none');
+    $('.displaypass').removeClass('d-none');
+    $('.savebutton').html('Se connecter');
+
+    $('.savebutton').off('click', check_email)
+    $('.savebutton').prop("type", "submit");
+}
+
+function set_save_mode() {
+    $('.i-know-u').addClass('d-none');
+    $('.displaypass').removeClass('d-none');
+    $('.profile').removeClass('d-none')
+    $('.savebutton').html('Enregistrer');
+
+    $('.savebutton').prop("type", "submit");
 }
 
 function hide_pass() {
