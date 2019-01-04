@@ -4,38 +4,22 @@
 
 {% block child_content %}
     {{ block.super }}
-    <div class="profile{% if not request.user.id %} d-none{% endif %}">
-        <div class="form-row">
-            <div class="form-group col-md-6">
-            <label for="first_name">Prénom</label><input type="text" id="first_name" name="first_name" class="form-control" autocomplete="first_name" value="{{ request.user.first_name }}" />
-            </div>
-            <div class="form-group col-md-6">
-            <label for="last_name">Nom</label><input type="text" id="last_name" name="last_name" class="form-control" autocomplete="last_name" value="{{ request.user.last_name }}" />
-            </div>
-            <div class="form-group col-md-6">
-            <label for="company">Entreprise</label><input type="text" id="company" name="company" class="form-control" autocomplete="company" value="{{ request.user.contributor.company }}" />
-            </div>
+    {{ form.city|as_crispy_field }}
+    {{ form.phonenumber|as_crispy_field }}
+
+    <div class="h3">Mes compétences</div>
+    {{ form.professional_profile|as_crispy_field }}
+    {{ form.position|as_crispy_field }}
+    <div class="pt-4">
+        <span class="font-weight-bold">Décris en une phrase ton apport à la communauté</span>
+        {{ form.description|as_crispy_field }}
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            {{ form.sector|as_crispy_field }}
         </div>
-
-        <div class="contribution-form-content">
-            {{ form.city|as_crispy_field }}
-            {{ form.phonenumber|as_crispy_field }}
-
-            <div class="h3">Mes compétences</div>
-            {{ form.professional_profile|as_crispy_field }}
-            {{ form.position|as_crispy_field }}
-            <div class="pt-4">
-                <span class="font-weight-bold">Décris en une phrase ton apport à la communauté</span>
-                {{ form.description|as_crispy_field }}
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    {{ form.sector|as_crispy_field }}
-                </div>
-                <div class="form-group col-md-6">
-                    {{ form.skill|as_crispy_field }}
-                </div>
-            </div>
+        <div class="form-group col-md-6">
+            {{ form.skill|as_crispy_field }}
         </div>
     </div>
 {% endblock %}

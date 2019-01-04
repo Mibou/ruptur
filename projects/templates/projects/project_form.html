@@ -4,32 +4,17 @@
 
 {% block child_content %}
     {{ block.super }}
-    <div class="profile{% if not request.user.id %} d-none{% endif %}">
-        <div class="form-row">
-            <div class="form-group col-md-6">
-            <label for="first_name">Prénom</label><input type="text" id="first_name" name="first_name" class="form-control" autocomplete="first_name" value="{{ request.user.first_name }}" />
-            </div>
-            <div class="form-group col-md-6">
-            <label for="last_name">Nom</label><input type="text" id="last_name" name="last_name" class="form-control" autocomplete="last_name" value="{{ request.user.last_name }}" />
-            </div>
-            <div class="form-group col-md-6">
-            <label for="company">Entreprise</label><input type="text" id="company" name="company" class="form-control" autocomplete="company" value="{{ request.user.contributor.company }}" />
-            </div>
-        </div>
 
-        <div class="contribution-form-content">
-            {{ contribform.city|as_crispy_field }}
+    {{ contribform.city|as_crispy_field }}
 
-            <div class="h3"><i class="fa fa-rocket mr-2"></i>Mon projet bleu</div>
+    <div class="h3"><i class="fa fa-rocket mr-2"></i>Mon projet bleu</div>
 
-            {{ form.title|as_crispy_field }}
-            {{ form.description|as_crispy_field }}
-            {{ form.nature|as_crispy_field }}
+    {{ form.title|as_crispy_field }}
+    {{ form.description|as_crispy_field }}
+    {{ form.nature|as_crispy_field }}
 
-            <div class="h4">Mots-clefs pour identifier facilement le projet</div>
-            {{ form.tags|as_crispy_field }}
-        </div>
-    </div>
+    <div class="h4">Mots-clefs pour identifier facilement le projet</div>
+    {{ form.tags|as_crispy_field }}
 {% endblock %}
 
 {% block script %}
