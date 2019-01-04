@@ -1,13 +1,14 @@
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.views.generic import UpdateView
+from django.views.generic.edit import DeleteView
+from django.http import HttpResponse, HttpResponseRedirect
+from django.views.generic import DetailView
 from .forms import ProjectForm
 from .models import Project
 from users.models import User
 from users.forms import ContributorForm
 from users.views import ContributorUpdate
-from django.http import HttpResponseRedirect
-from django.views.generic import DetailView
 
 __all__ = [
     'ProjectUpdate'
@@ -16,6 +17,11 @@ __all__ = [
 
 def contribute(request):
     return render(request, 'projects/contribute.html')
+
+
+class ProjectDelete(DeleteView):
+    model = Project
+    success_url = reverse_lazy('contribute')
 
 
 class ProjectUpdate(UpdateView):

@@ -17,6 +17,11 @@ from users.views import ContributorUpdate
 from django.http import HttpResponseRedirect
 
 
+class IdeaDelete(DeleteView):
+    model = Idea
+    success_url = reverse_lazy('contribute')
+
+
 class IdeaCreate(CreateView):
     model = Idea
     fields = ['title', 'description']
@@ -104,11 +109,6 @@ class IdeaUpdate(UpdateView):
             pk = idea.pk
 
         return HttpResponseRedirect(self.get_success_url(pk=pk))
-
-
-class IdeaDelete(DeleteView):
-    model = Idea
-    success_url = reverse_lazy('idea-list')
 
 
 class IdeaDetailView(DetailView):

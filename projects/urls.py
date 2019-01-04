@@ -1,7 +1,7 @@
 from django.urls import path
 from django.conf.urls import url, include
 from tastypie.api import Api
-from .views import contribute, ProjectUpdate, ProjectDetailView
+from .views import contribute, ProjectUpdate, ProjectDelete, ProjectDetailView
 from .api import ProjectResource
 from .autocomplete import TagAutocomplete
 
@@ -19,6 +19,11 @@ urlpatterns = [
     url('api/', include(v1_api.urls)),
     path('contribute', contribute, name='contribute'),
     path('project/new', ProjectUpdate.as_view(), name='project-form'),
+    path(
+        'project/<int:pk>/delete',
+        ProjectDelete.as_view(),
+        name='project-delete'
+    ),
     path(
         'project/<int:pk>/edit',
         ProjectUpdate.as_view(),

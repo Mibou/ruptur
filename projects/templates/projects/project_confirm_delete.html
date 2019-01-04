@@ -8,7 +8,7 @@
         <div class="row justify-content-md-center">
             <form method="post" class="col-lg-8 col-lg-offset-2">
                 {% csrf_token %}
-                Êtes-vous sûr de vouloir supprimer votre idée "{{object}}" ?
+                Êtes-vous sûr de vouloir supprimer votre projet "{{object}}" ?
                 <br /><br />
                 <button type="submit" class="btn btn-primary">Confirmer</button>
                 <a href="{% url 'contribute' %}">
