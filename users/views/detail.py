@@ -55,7 +55,8 @@ class ContributorUpdate(UpdateView):
         for attr in [
             'phonenumber',
             'description',
-            'professional_profile'
+            'professional_profile',
+            'company'
         ]:
             if request.POST.get(attr):
                 setattr(contributor, attr, request.POST.get(attr))
@@ -96,6 +97,7 @@ class ContributorUpdate(UpdateView):
             user=user,
             city_id=request.POST.get('city'),
             phonenumber=request.POST.get('phonenumber'),
+            company=request.POST.get('company'),
             professional_profile=request.POST.get('professional_profile'),
             position_id=request.POST.get('position'),
             description=request.POST.get('description'),
