@@ -37,10 +37,7 @@ class ProjectUpdate(UpdateView):
             return None
 
     def get_success_url(self, **kwargs):
-        if kwargs:
-            return reverse_lazy('project-form', kwargs={'pk': kwargs['pk']})
-        else:
-            return reverse_lazy('project-form', args=(self.object.id,))
+        return reverse_lazy('contribute')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

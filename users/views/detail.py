@@ -20,7 +20,7 @@ __all__ = [
 class ContributorUpdate(UpdateView):
     form_class = ContributorForm
     queryset = Contributor.objects
-    success_url = reverse_lazy('contributor-form')
+    success_url = reverse_lazy('contribute')
     template_name = 'users/contributor_form.html'
 
     def get_object(self, queryset=None):
