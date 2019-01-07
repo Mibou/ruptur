@@ -23,6 +23,7 @@ function check_email(t) {
 
 function set_login_mode() {
     $('.i-know-u').removeClass('d-none');
+    $('.i-dont-know-u').addClass('d-none');
     $('.displaypass').removeClass('d-none');
     $('.savebutton').html('Se connecter');
 
@@ -32,6 +33,7 @@ function set_login_mode() {
 
 function set_save_mode() {
     $('.i-know-u').addClass('d-none');
+    $('.i-dont-know-u').removeClass('d-none');
     $('.displaypass').removeClass('d-none');
     $('.profile').removeClass('d-none')
     $('.savebutton').html('Enregistrer');
@@ -44,6 +46,7 @@ function hide_pass() {
     $('.profile').addClass('d-none');
     $('.savebutton').prop("type", "button");
     $('.savebutton').html('Vérifier');
+    $('.savebutton').on('click', check_email)
 }
 
 $('.savebutton').on('click', check_email)

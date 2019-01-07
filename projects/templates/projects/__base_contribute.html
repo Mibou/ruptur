@@ -39,6 +39,7 @@
                     {% if not request.user.id %}
                     <div class="form-group displaypass d-none">
                         <div class="i-know-u small-information-text pb-1">On se connaît non ? Connecte-toi avec toi avec ton mot de passe</div>
+                        <div class="i-dont-know-u small-information-text pb-1">Saisis un mot de passe pour créer ton compte</div>
                         <label for="password">Mot de passe</label><input type="password" name="password" id="password" class="form-control" autocomplete="current-password" />
                     </div>
                     {% endif %}
