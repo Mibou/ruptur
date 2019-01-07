@@ -29,7 +29,7 @@ class Contributor(VirtualDelete, Datation, Searchable):
     city = models.ForeignKey(
         'geography.City',
         on_delete=models.PROTECT,
-        verbose_name=_('Ville')
+        verbose_name=_('Code Postal')
     )
     sector = models.ForeignKey(
         'users.Sector',
