@@ -21,8 +21,8 @@
         </div>
         <div class="mb-3 text-right">
             <span class="mr-2"># Contributions : {{ object.contributions.count }}</span>
-            <span class="mr-2 thumbitup"><i class="fa fa-thumbs-up"></i> {{ object.get_votes_up.count }}</span>
-            <span class="thumbitdown"><i class="fa fa-thumbs-down"></i> {{ object.get_votes_down.count }}</span>
+            <span class="mr-2 thumbitup"><i class="fa fa-thumbs-up"></i> <span id="upvotes">{{ object.get_votes_up.count }}</span></span>
+            <span class="thumbitdown"><i class="fa fa-thumbs-down"></i> <span id="downvotes">{{ object.get_votes_down.count }}</span></span>
         </div>
         {% if request.user.id %}
         <div class="text-center alert alert-info col-lg-10 offset-lg-1">
@@ -84,7 +84,8 @@
                     jqXHR.setRequestHeader('X-CSRFToken', $('input[name=csrfmiddlewaretoken]').val());
                 },
                 success: function(data) {
-                    alert(data);
+                    $('#downvotes').text(data['down']);
+                    $('#upvotes').text(data['up']);
                 }
             });
         }

@@ -35,6 +35,7 @@ class VoteResource(ModelResource):
     idea = fields.ForeignKey(IdeaResource, 'idea')
 
     class Meta:
+        always_return_data = True
         authentication = SessionAuthentication()
         authorization = Authorization()
         queryset = Vote.objects.all()
@@ -42,4 +43,9 @@ class VoteResource(ModelResource):
 
     def hydrate(self, bundle):
         bundle.obj.user = bundle.request.user
+        return bundle
+
+    def full_dehydrate(self, bundle):
+        bundle.data['up'] = bundle.obj.idea.get_votes_up().count()
+        bundle.data['down'] = bundle.obj.idea.get_votes_down().count()
         return bundle

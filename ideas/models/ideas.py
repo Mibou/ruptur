@@ -93,12 +93,19 @@ class Vote(models.Model):
 
     def save(self, *args, **kwargs):
 
+        defaults = {'up': self.up}
+        values = {
+            'user': self.user,
+            'idea': self.idea
+        }
         if self.pk is None:
-            Vote.objects.update_or_create(
-                user=self.user,
-                idea=self.idea,
-                defaults={'up': self.up}
-            )[0]
+            try:
+                obj = Vote.objects.get(**values)
+                for key, value in defaults.items():
+                    setattr(obj, key, value)
+                obj.save()
+            except Vote.DoesNotExist:
+                super(Vote, self).save(*args, **kwargs)
         else:
             super(Vote, self).save(*args, **kwargs)
 
