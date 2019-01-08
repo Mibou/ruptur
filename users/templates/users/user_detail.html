@@ -47,7 +47,6 @@
             <span class="font-weight-bold">Mots Clefs :</span>
             {% tags_for_object object.contributor as tag_list %}
             {% for tag in tag_list %}{% if object.contributor.sector %}<i class="fa fa-tag ml-3 mr-1"></i>{{ tag }}{% endif %}{% endfor %}
-            {% if object.contributor.skill %}<i class="fa fa-tag ml-3 mr-1"></i>{{ object.contributor.skill }}{% endif %}
         </div>
         {% endif %}
         {% if object.contributor.ideas.all or object.contributor.projects.all %}

@@ -10,6 +10,7 @@ from ruptur.libs.poi import POI
 from typing import Optional
 from .users import User
 from tagging.fields import TagField
+from tagging.models import Tag
 
 __all__ = [
     'Contributor',
@@ -100,7 +101,7 @@ class Contributor(VirtualDelete, Datation, Searchable):
         )
 
     def get_tags(self):
-        return [str(self.skill)]
+        return [str(tag) for tag in Tag.objects.get_for_object(self)[:3]]
 
     def get_title(self):
         return " ".join([self.user.first_name, self.user.last_name])
