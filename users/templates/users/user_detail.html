@@ -19,6 +19,11 @@
                 {% if object.contributor.phonenumber %}<a href="tel:{{ object.contributor.phonenumber }}">{{ object.contributor.phonenumber }}</a><br />{% endif %}
             </p>
         </div>
+        {% if object.contributor.description %}
+        <div class="row justify-content-md-center mb-3">
+            <span class="font-weight-bold">En une phrase : </span>&nbsp;{{ object.contributor.description }}
+        </div>
+        {% endif %}
         <div class="row justify-content-md-center mb-3">
             {% if object.contributor.company %}<span class="font-weight-bold">Entreprise :</span>&nbsp;{{ object.contributor.company }}{% endif %}
             {% if object.contributor.company and object.contributor.position %}-&nbsp;{% endif %}
