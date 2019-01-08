@@ -9,6 +9,7 @@ from ruptur.libs.searchable import Searchable
 from ruptur.libs.poi import POI
 from typing import Optional
 from .users import User
+from tagging.fields import TagField
 
 __all__ = [
     'Contributor',
@@ -56,6 +57,9 @@ class Contributor(VirtualDelete, Datation, Searchable):
         verbose_name=_('Fonction'),
         blank=True,
         null=True
+    )
+    tags = TagField(
+        verbose_name=_('Mots clefs')
     )
     skill = models.ForeignKey(
         'users.Skill',

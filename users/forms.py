@@ -31,6 +31,9 @@ class ContributorForm(ModelForm):
             'city': autocomplete.ModelSelect2(
                 url='city-autocomplete',
             ),
+            'tags': autocomplete.TaggingSelect2(
+                'tag-autocomplete'
+            )
         }
 
 

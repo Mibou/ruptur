@@ -43,6 +43,16 @@ class ContributorUpdate(UpdateView):
     def update_contributor(request):
         contributor = request.user.contributor
 
+        for attr in [
+            'tags'
+        ]:
+            if request.POST.getlist(attr):
+                setattr(
+                    contributor,
+                    attr,
+                    ','.join(request.POST.getlist(attr))
+                )
+
         for fkattr in [
             'city',
             'position',
@@ -102,6 +112,7 @@ class ContributorUpdate(UpdateView):
             position_id=request.POST.get('position'),
             description=request.POST.get('description'),
             sector_id=request.POST.get('sector'),
+            tags=request.POST.get('tags'),
             skill_id=request.POST.get('skill')
         )
         login(request, user)
