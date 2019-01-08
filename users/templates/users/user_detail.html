@@ -42,7 +42,7 @@
             {% if object.contributor.skill %}<i class="fa fa-tag ml-3 mr-1"></i>{{ object.contributor.skill }}{% endif %}
         </div>
         {% endif %}
-        {% if object.contributor.sector or object.contributor.skill %}
+        {% if object.contributor.tags %}
         <div class="row justify-content-md-center mb-2">
             <span class="font-weight-bold">Mots Clefs :</span>
             {% tags_for_object object.contributor as tag_list %}
