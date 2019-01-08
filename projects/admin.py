@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import (
     Nature,
+    Maturity,
     Project,
     Invitation,
     ProjectContributor
@@ -12,6 +13,12 @@ from .forms import ProjectForm
 class NatureAdmin(admin.ModelAdmin):
     list_display = ('name', )
     search_fields = ['name']
+
+
+@admin.register(Maturity)
+class MaturityAdmin(admin.ModelAdmin):
+    list_display = ('name', 'level', )
+    search_fields = ['name', 'level']
 
 
 class ProjectContributorInline(admin.TabularInline):

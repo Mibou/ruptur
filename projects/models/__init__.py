@@ -1,5 +1,6 @@
 from .projects import (
     Project,
+    Maturity,
     Nature,
     Tag,
     Invitation,
@@ -8,6 +9,7 @@ from .projects import (
 
 __all__ = [
     'Nature',
+    'Maturity',
     'Project',
     'Tag',
     'Invitation',

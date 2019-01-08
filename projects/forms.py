@@ -12,6 +12,7 @@ class ProjectForm(ModelForm):
             'title',
             'description',
             'nature',
+            'maturity',
             'tags',
             'skills',
             'creator',

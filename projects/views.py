@@ -60,7 +60,8 @@ class ProjectUpdate(UpdateView):
     @staticmethod
     def update_project(project, request):
         for fkattr in [
-            'nature'
+            'nature',
+            'maturity'
         ]:
             if request.POST.get(fkattr):
                 setattr(project, fkattr + '_id', request.POST.get(fkattr))
@@ -85,6 +86,7 @@ class ProjectUpdate(UpdateView):
             creator=request.user.contributor,
             title=request.POST.get('title'),
             description=request.POST.get('description'),
+            maturity_id=request.POST.get('maturity'),
             nature_id=request.POST.get('nature'),
             tags=','.join(request.POST.getlist('tags')),
         )

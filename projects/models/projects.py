@@ -13,6 +13,7 @@ from tagging.fields import TagField
 
 __all__ = [
     'Nature',
+    'Maturity',
     'Project',
     'Tag',
     'Invitation'
@@ -45,12 +46,31 @@ class Tag(models.Model):
         return self.name
 
 
+class Maturity(models.Model):
+    level = models.PositiveSmallIntegerField()
+    name = models.CharField(max_length=100)
+
+    class Meta:
+        verbose_name = _('maturité')
+        verbose_name_plural = _('maturités')
+
+    def __str__(self):
+        return self.name
+
+
 class Project(VirtualDelete, Datation, Searchable):
     CLASS_ICON = 'rocket'
 
     title = models.CharField(
         max_length=250,
         verbose_name=_('Titre du projet')
+    )
+    maturity = models.ForeignKey(
+        'projects.Maturity',
+        on_delete=models.PROTECT,
+        verbose_name=_('Maturité'),
+        null=True,
+        default=None
     )
     description = models.TextField(
         verbose_name=_('Description du projet')
