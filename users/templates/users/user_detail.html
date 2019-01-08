@@ -1,6 +1,7 @@
 {% extends '__base.html' %}
 
 {% load static %}
+{% load tagging_tags %}
 {% load crispy_forms_tags %}
 
 {% block content %}
@@ -35,23 +36,22 @@
         </div>
         {% endif %}
         {% if object.contributor.sector or object.contributor.skill %}
-        <div class="row justify-content-md-center mb-3">
-        <div class="row mb-3">
+        <div class="row justify-content-md-center mb-2">
             <span class="font-weight-bold">Secteur et Compétences :</span>
             {% if object.contributor.sector %}<i class="fa fa-tag ml-3 mr-1"></i>{{ object.contributor.sector }}{% endif %}
             {% if object.contributor.skill %}<i class="fa fa-tag ml-3 mr-1"></i>{{ object.contributor.skill }}{% endif %}
         </div>
         {% endif %}
         {% if object.contributor.sector or object.contributor.skill %}
-        <div class="row justify-content-md-center mb-3">
-        <div class="row mb-3">
+        <div class="row justify-content-md-center mb-2">
             <span class="font-weight-bold">Mots Clefs :</span>
-            {% if object.contributor.sector %}<i class="fa fa-tag ml-3 mr-1"></i>{{ object.contributor.sector }}{% endif %}
+            {% tags_for_object object.contributor as tag_list %}
+            {% for tag in tag_list %}{% if object.contributor.sector %}<i class="fa fa-tag ml-3 mr-1"></i>{{ tag }}{% endif %}{% endfor %}
             {% if object.contributor.skill %}<i class="fa fa-tag ml-3 mr-1"></i>{{ object.contributor.skill }}{% endif %}
         </div>
         {% endif %}
         {% if object.contributor.ideas.all or object.contributor.projects.all %}
-            <div class="row font-weight-bold pb-2">Vos Contributions :</div>
+            <div class="row font-weight-bold pb-3">Vos Contributions :</div>
             {% for idea in object.contributor.ideas.all %}
             <div class="row">
                 <i class="fa fa-{{ idea.get_icon }} pr-2 pl-2"></i><a href="{{ idea.get_absolute_url }}">{{ idea.title }}</a>
