@@ -106,7 +106,7 @@ class Contributor(VirtualDelete, Datation, Searchable):
         return " ".join([self.user.first_name, self.user.last_name])
 
     def get_subtitle(self):
-        return str(self.description)
+        return self.description
 
     def get_latitude(self):
         return self.city.latitude
